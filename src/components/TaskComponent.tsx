@@ -20,7 +20,7 @@ function decrementTask(task: Task) {
     }
 }
 
-export default function TaskComponent(task: Task) {
+export default function TaskComponent(task: Task, characterName?: string) {
 
     const dispatch = useDispatch()
 
@@ -29,11 +29,11 @@ export default function TaskComponent(task: Task) {
             <FormControlLabel label={task.name} labelPlacement="start" key={task.name} control={
                 <ButtonGroup size="small">
                     <Button onClick={() => {
-                        dispatch(update({task: task, update: decrementTask}))
+                        dispatch(update({task: task, character: characterName, update: decrementTask}))
                     }}>-</Button>
                     <Button disabled>{task.currentCount}</Button>
                     <Button onClick={() => {
-                        dispatch(update({task: task, update: incrementTask}))
+                        dispatch(update({task: task, character: characterName, update: incrementTask}))
                     }}>+</Button>
                 </ButtonGroup>
             }/>
@@ -43,7 +43,7 @@ export default function TaskComponent(task: Task) {
         return (
             <FormControlLabel label={task.name} labelPlacement="start" key={task.name}
                               control={<Checkbox onChange={(event) => {
-                                  dispatch(update({task: task, update: toggleTask}))
+                                  dispatch(update({task: task, character: characterName, update: toggleTask}))
                               }} checked={task.completed}/>}/>
         );
     }

@@ -1,6 +1,6 @@
 export interface TaskUpdate {
-    task: Task
-
+    task: Task,
+    character?: string,
     update(task: Task): void;
 }
 

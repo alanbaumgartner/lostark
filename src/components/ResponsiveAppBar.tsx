@@ -17,6 +17,8 @@ import {useDispatch} from "react-redux";
 import {addCharacter} from "../app/accountSlice";
 import {Server} from "../data/CharacterModel";
 
+const drawerWidth = 240;
+
 function appBarLabel(label: string) {
 
     const [name, setName] = useState("")
@@ -81,10 +83,8 @@ function appBarLabel(label: string) {
 
 export default function ResponsiveAppBar() {
     return (
-        <Stack spacing={2} sx={{flexGrow: 1}}>
-            <AppBar position="static" color="primary">
+            <AppBar position="fixed" sx={{ zIndex: (theme) => theme.zIndex.drawer + 1 }}>
                 {appBarLabel('default')}
             </AppBar>
-        </Stack>
     );
 }
