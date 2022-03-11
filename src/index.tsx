@@ -5,14 +5,21 @@ import App from './App';
 import {Provider} from 'react-redux'
 import {PersistGate} from "redux-persist/integration/react";
 import {persistor, store} from "./app/store";
+import {createTheme, ThemeProvider} from "@mui/material";
+
+const darkTheme = createTheme({
+    palette: {
+        mode: 'dark',
+    },
+});
 
 ReactDOM.render(
     <Provider store={store}>
         <PersistGate persistor={persistor}>
-            {/*<ThemeProvider theme={theme}>*/}
-            <CssBaseline/>
-            <App/>
-            {/*</ThemeProvider>*/}
+            <ThemeProvider theme={darkTheme}>
+                <CssBaseline/>
+                <App/>
+            </ThemeProvider>
         </PersistGate>
     </Provider>,
     document.querySelector('#root'),
