@@ -5,9 +5,6 @@ import Weeklies from "./Weeklies";
 import {useDispatch, useSelector} from "react-redux";
 import {
     addCharacter,
-    updateAccountWeekly,
-    updateCharacterDaily,
-    updateCharacterWeekly
 } from "../app/accountSlice";
 import {RootState} from "../app/store";
 import CharacterComponent from "./Character";
@@ -24,7 +21,6 @@ export default function Account() {
             <Button onClick={() => dispatch(addCharacter("Testing"))}>
                 New Acc
             </Button>
-
             <Dailies/>
             <Weeklies/>
             {characters.map((char: Character, _: any) => (

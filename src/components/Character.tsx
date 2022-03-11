@@ -1,14 +1,10 @@
 import * as React from 'react';
-import {Checkbox, FormControlLabel, Stack, Typography} from '@mui/material';
-import { updateCharacterDaily, updateCharacterWeekly} from "../app/accountSlice";
-import {useDispatch} from "react-redux";
+import {Stack, Typography} from '@mui/material';
 import {Character} from "../data/CharacterModel";
 import {Task} from "../data/TaskModel";
 import TaskComponent from "./TaskComponent";
 
 export default function CharacterComponent(character: Character) {
-
-    const dispatch = useDispatch()
 
     return (
         <Stack>

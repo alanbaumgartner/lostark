@@ -1,3 +1,8 @@
+export interface TaskUpdate {
+    task: Task
+    update(task: Task): void;
+}
+
 export interface Task {
     name: string,
     completed: boolean,

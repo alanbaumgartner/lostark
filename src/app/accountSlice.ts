@@ -1,15 +1,19 @@
 import {createSlice, Draft, PayloadAction} from '@reduxjs/toolkit'
 
 import {Account, createAccount} from "../data/AccountModel";
-import {Task} from "../data/TaskModel";
+import {Task, TaskUpdate} from "../data/TaskModel";
 import {Character, createCharacter} from "../data/CharacterModel";
+
+function getTaskList(account: Account): Task[] {
+    return account.accountWeeklies.concat(account.accountDailies).concat(account.characters.flatMap(c => c.dailies.concat(c.weeklies)))
+}
 
 function findCharacter(list: Character[], name: string) {
     return list.find(char => char.name === name)
 }
 
-function findTask(list: Task[], name: string) {
-    return list.find(task => task.name === name)
+function findTask(account: Account, name: string) {
+    return getTaskList(account).find(task => task.name === name)
 }
 
 export const accountSlice = createSlice({
@@ -23,57 +27,10 @@ export const accountSlice = createSlice({
             }
             return state
         },
-        updateCharacterDaily: (state: Draft<Account>, action: PayloadAction<[string, Task]>) => {
-            let char = findCharacter(state.characters, action.payload[0])
-            if (char !== undefined) {
-                let task = findTask(char.dailies, action.payload[1].name)
-                if (task !== undefined) {
-                    if (task.currentCount !== undefined && task.requiredCount !== undefined) {
-                        task.currentCount = Math.min(task.currentCount + 1, task.requiredCount)
-                        task.completed = true
-                    } else {
-                        task.completed = action.payload[1].completed
-                    }
-                }
-            }
-            return state
-        },
-        updateCharacterWeekly: (state: Draft<Account>, action) => {
-            let char = findCharacter(state.characters, action.payload[0])
-            if (char !== undefined) {
-                let task = findTask(char.weeklies, action.payload[1].name)
-                if (task !== undefined) {
-                    if (task.currentCount !== undefined && task.requiredCount !== undefined) {
-                        task.currentCount = Math.min(task.currentCount + 1, task.requiredCount)
-                        task.completed = true
-                    } else {
-                        task.completed = action.payload[1].completed
-                    }
-                }
-            }
-            return state
-        },
-        updateAccountDaily: (state: Draft<Account>, action: PayloadAction<Task>) => {
-            let task = findTask(state.accountDailies, action.payload.name)
+        update: (state: Draft<Account>, action: PayloadAction<TaskUpdate>) => {
+            let task = findTask(state, action.payload.task.name)
             if (task !== undefined) {
-                if (task.currentCount !== undefined && task.requiredCount !== undefined) {
-                    task.currentCount = Math.min(task.currentCount + 1, task.requiredCount)
-                    task.completed = true
-                } else {
-                    task.completed = action.payload.completed
-                }
-            }
-            return state
-        },
-        updateAccountWeekly: (state: Draft<Account>, action: PayloadAction<Task>) => {
-            let task = findTask(state.accountWeeklies, action.payload.name)
-            if (task !== undefined) {
-                if (task.currentCount !== undefined && task.requiredCount !== undefined) {
-                    task.currentCount = Math.min(task.currentCount + 1, task.requiredCount)
-                    task.completed = true
-                } else {
-                    task.completed = action.payload.completed
-                }
+                action.payload.update(task)
             }
             return state
         },
@@ -82,10 +39,7 @@ export const accountSlice = createSlice({
 
 export const {
     addCharacter,
-    updateCharacterDaily,
-    updateCharacterWeekly,
-    updateAccountDaily,
-    updateAccountWeekly
+    update,
 } = accountSlice.actions
 
 export default accountSlice.reducer

@@ -1,67 +1,51 @@
 import * as React from 'react';
-import {Badge, Checkbox, FormControlLabel} from '@mui/material';
-import {
-    updateAccountDaily,
-    updateAccountWeekly,
-    updateCharacterDaily,
-    updateCharacterWeekly
-} from "../app/accountSlice";
+import {Button, ButtonGroup, Checkbox, FormControlLabel} from '@mui/material';
+import {update} from "../app/accountSlice";
 import {useDispatch} from "react-redux";
 import {Character} from "../data/CharacterModel";
 import {Task} from "../data/TaskModel";
+
+function toggleTask(task: Task) {
+    task.completed = !task.completed
+}
+
+function incrementTask(task: Task) {
+    if (task.currentCount !== undefined) {
+        task.currentCount = Math.min(task.currentCount + 1, task.requiredCount?? task.currentCount)
+    }
+}
+
+function decrementTask(task: Task) {
+    if (task.currentCount !== undefined) {
+        task.currentCount = Math.max(task.currentCount - 1, 0)
+    }
+}
 
 export default function TaskComponent(task: Task, daily: boolean, character?: Character) {
 
     const dispatch = useDispatch()
 
-    if (task.currentCount !== undefined) {
+    if (task.currentCount !== undefined && task.requiredCount !== undefined) {
         return (
-                <FormControlLabel label={task.name} labelPlacement="start" key={task.name} control={
-                    <Badge badgeContent={task.currentCount} color="error">
-                    <Checkbox onChange={(event) => {
-                    if (daily) {
-                        if (character !== undefined) {
-                            dispatch(updateCharacterDaily([character.name, {name: task.name, completed: event.target.checked}]))
-                        } else {
-                            dispatch(updateAccountDaily({name: task.name, completed: event.target.checked}))
-                        }
-                    } else {
-                        if (character !== undefined) {
-                            dispatch(updateCharacterWeekly([character.name, {
-                                name: task.name,
-                                completed: event.target.checked
-                            }]))
-                        } else {
-                            dispatch(updateAccountWeekly({name: task.name, completed: event.target.checked}))
-                        }
-                    }
-                }
-                } checked={task.completed}/>
-            </Badge>
-                        }/>
+            <FormControlLabel label={task.name} labelPlacement="start" key={task.name} control={
+                <ButtonGroup size="small">
+                    <Button onClick={() => {
+                        dispatch(update({task: task, update: decrementTask}))
+                    }}>-</Button>
+                    <Button disabled>{task.currentCount}</Button>
+                    <Button onClick={() => {
+                        dispatch(update({task: task, update: incrementTask}))
+                    }}>+</Button>
+                </ButtonGroup>
+            }/>
         );
     } else {
 
         return (
-                <FormControlLabel label={task.name} labelPlacement="start" key={task.name} control={<Checkbox onChange={(event) => {
-                    if (daily) {
-                        if (character !== undefined) {
-                            dispatch(updateCharacterDaily([character.name, {name: task.name, completed: event.target.checked}]))
-                        } else {
-                            dispatch(updateAccountDaily({name: task.name, completed: event.target.checked}))
-                        }
-                    } else {
-                        if (character !== undefined) {
-                            dispatch(updateCharacterWeekly([character.name, {
-                                name: task.name,
-                                completed: event.target.checked
-                            }]))
-                        } else {
-                            dispatch(updateAccountWeekly({name: task.name, completed: event.target.checked}))
-                        }
-                    }
-                }
-                } checked={task.completed}/>}/>
+            <FormControlLabel label={task.name} labelPlacement="start" key={task.name}
+                              control={<Checkbox onChange={(event) => {
+                                  dispatch(update({task: task, update: toggleTask}))
+                              }} checked={task.completed}/>}/>
         );
     }
 
