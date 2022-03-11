@@ -1,5 +1,6 @@
 export interface TaskUpdate {
     task: Task
+
     update(task: Task): void;
 }
 
@@ -15,11 +16,11 @@ export function isTaskDone(task: Task) {
 }
 
 export function createTask(name: string) {
-    return { name: name, completed: false}
+    return {name: name, completed: false}
 }
 
 export function createCountTask(name: string, count: number) {
-    return { name: name, completed: false, currentCount: 0, requiredCount: count }
+    return {name: name, completed: false, currentCount: 0, requiredCount: count}
 }
 
 export const generateDailyAccountData = () => {

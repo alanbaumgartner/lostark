@@ -11,12 +11,12 @@ export default function CharacterComponent(character: Character) {
             <Typography>{character.name}</Typography>
             <Stack>
                 {character.weeklies.map((task: Task, _: any) => (
-                    TaskComponent(task, false, character)
+                    TaskComponent(task)
                 ))}
             </Stack>
             <Stack>
                 {character.dailies.map((task: Task, _: any) => (
-                    TaskComponent(task, true, character)
+                    TaskComponent(task)
                 ))}
             </Stack>
         </Stack>

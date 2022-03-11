@@ -2,7 +2,7 @@ import {createSlice, Draft, PayloadAction} from '@reduxjs/toolkit'
 
 import {Account, createAccount} from "../data/AccountModel";
 import {Task, TaskUpdate} from "../data/TaskModel";
-import {Character, createCharacter} from "../data/CharacterModel";
+import {Character, createCharacter, Server} from "../data/CharacterModel";
 
 function getTaskList(account: Account): Task[] {
     return account.accountWeeklies.concat(account.accountDailies).concat(account.characters.flatMap(c => c.dailies.concat(c.weeklies)))
@@ -20,10 +20,10 @@ export const accountSlice = createSlice({
     name: 'account',
     initialState: createAccount(),
     reducers: {
-        addCharacter: (state: Draft<Account>, action: PayloadAction<string>) => {
-            let char = findCharacter(state.characters, action.payload)
+        addCharacter: (state: Draft<Account>, action: PayloadAction<[string, Server]>) => {
+            let char = findCharacter(state.characters, action.payload[0])
             if (char === undefined) {
-                state.characters.push(createCharacter(action.payload))
+                state.characters.push(createCharacter(action.payload[0], action.payload[1]))
             }
             return state
         },

@@ -2,7 +2,6 @@ import * as React from 'react';
 import {Button, ButtonGroup, Checkbox, FormControlLabel} from '@mui/material';
 import {update} from "../app/accountSlice";
 import {useDispatch} from "react-redux";
-import {Character} from "../data/CharacterModel";
 import {Task} from "../data/TaskModel";
 
 function toggleTask(task: Task) {
@@ -11,7 +10,7 @@ function toggleTask(task: Task) {
 
 function incrementTask(task: Task) {
     if (task.currentCount !== undefined) {
-        task.currentCount = Math.min(task.currentCount + 1, task.requiredCount?? task.currentCount)
+        task.currentCount = Math.min(task.currentCount + 1, task.requiredCount ?? task.currentCount)
     }
 }
 
@@ -21,7 +20,7 @@ function decrementTask(task: Task) {
     }
 }
 
-export default function TaskComponent(task: Task, daily: boolean, character?: Character) {
+export default function TaskComponent(task: Task) {
 
     const dispatch = useDispatch()
 
