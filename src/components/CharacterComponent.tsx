@@ -15,7 +15,7 @@ export default function CharacterComponent(character: Character) {
                 flexDirection: 'column',
                 p: 1,
                 m: 1,
-                // bgcolor: 'white',
+                bgcolor: 'gray',
                 borderRadius: 1,
             }}
         >
