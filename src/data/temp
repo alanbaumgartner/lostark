@@ -1,0 +1,60 @@
+    const [name, setName] = useState("")
+    const [server, setServer] = useState(Server.na_east)
+    const [open, setOpen] = useState(false);
+
+    const dispatch = useDispatch()
+
+    const handleCreate = () => {
+        setOpen(false)
+        dispatch(addCharacter([name, server]))
+    }
+
+    const handleClickOpen = () => {
+        setOpen(true);
+    };
+
+    const handleClose = () => {
+        setOpen(false);
+    };
+
+
+
+                <AppBar position="fixed" sx={{ zIndex: (theme) => theme.zIndex.drawer + 1 }}>
+                    <Toolbar>
+                        <IconButton edge="start" color="inherit" aria-label="menu" sx={{mr: 2}}>
+                            <MenuIcon onClick={handleDrawer}/>
+                        </IconButton>
+                        <Typography variant="h6" noWrap component="div" sx={{flexGrow: 1}}>
+                            Lost Ark
+                        </Typography>
+                        <IconButton
+                            size="large"
+                            aria-label="account of current user"
+                            aria-controls="menu-appbar"
+                            aria-haspopup="true"
+                            onClick={handleClickOpen}
+                            color="inherit"
+                        >
+                            <AccountCircle/>
+                        </IconButton>
+                        <Dialog open={open} onClose={handleClose}>
+                            <DialogTitle>Create a Character</DialogTitle>
+                            <DialogContent>
+                                <TextField
+                                    onChange={event => setName(event.target.value)}
+                                    autoFocus
+                                    margin="dense"
+                                    id="name"
+                                    label="Character Name"
+                                    type="name"
+                                    fullWidth
+                                    variant="standard"
+                                />
+                            </DialogContent>
+                            <DialogActions>
+                                <Button onClick={handleClose}>Cancel</Button>
+                                <Button onClick={handleCreate}>Create</Button>
+                            </DialogActions>
+                        </Dialog>
+                    </Toolbar>
+                </AppBar>
