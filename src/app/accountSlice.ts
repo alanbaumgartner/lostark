@@ -2,7 +2,7 @@ import {createSlice, Draft, PayloadAction} from '@reduxjs/toolkit'
 
 import {Account, createAccount} from "../data/AccountModel";
 import {Task, TaskUpdate} from "../data/TaskModel";
-import {Character, createCharacter, Server} from "../data/CharacterModel";
+import {createCharacter, Server} from "../data/CharacterModel";
 
 function getCharacterTaskList(account: Account, character: string): Task[] {
     let char = findCharacter(account, character)
