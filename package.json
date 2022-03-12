@@ -1,6 +1,6 @@
 {
-  "name": "lost-ark-tracker",
-  "homepage": "https://alanbaumgartner.github.io/lostark",
+  "name": "lost-ark-tools",
+  "homepage": "https://loa.narcos.dev",
   "version": "5.0.0",
   "private": true,
   "dependencies": {
