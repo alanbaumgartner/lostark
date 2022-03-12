@@ -7,7 +7,6 @@ import CharacterComponent from "./CharacterComponent";
 import {Character} from "../data/CharacterModel";
 import Box from "@mui/material/Box";
 
-
 export default function Account() {
 
     const characters: Character[] = useSelector((state: RootState) => state.persistedReducer.characters)
@@ -27,16 +26,8 @@ export default function Account() {
             <Weeklies/>
             {characters.map((char: Character, _: any) => (
                 <CharacterComponent name={char.name} server={char.server} weeklies={char.weeklies}
-                                    dailies={char.dailies}/>
+                                    dailies={char.dailies} loaClass={char.loaClass} itemLevel={char.itemLevel}/>
             ))}
         </Box>
-        // <Stack direction="row" divider={<Divider orientation="vertical" flexItem />}>
-        //     <Dailies/>
-        //     <Weeklies/>
-        //     {characters.map((char: Character, _: any) => (
-        //         <CharacterComponent name={char.name} server={char.server} weeklies={char.weeklies}
-        //                             dailies={char.dailies}/>
-        //     ))}
-        // </Stack>
     );
 }

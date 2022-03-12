@@ -26,9 +26,10 @@ import DialogContent from "@mui/material/DialogContent";
 import TextField from "@mui/material/TextField";
 import DialogActions from "@mui/material/DialogActions";
 import Button from "@mui/material/Button";
-import {Server} from "./data/CharacterModel";
+import {createCharacter, enumToMap, LoaClass, Server} from "./data/CharacterModel";
 import {useDispatch} from "react-redux";
 import {addCharacter} from "./app/accountSlice";
+import {FormControl, InputLabel, MenuItem, OutlinedInput, Select, SelectChangeEvent} from "@mui/material";
 
 const drawerWidth = 240;
 
@@ -115,14 +116,16 @@ export default function App() {
     };
 
     const [name, setName] = useState("")
-    const [server, setServer] = useState(Server.na_east)
+    const [server, setServer] = useState(Server.NA_EAST)
+    const [itemLevel, setItemLevel] = useState(0)
+    const [loaClass, setLoaClass] = useState(LoaClass.BERSERKER)
     const [createCharacterOpen, setCreateCharacterOpen] = useState(false);
 
     const dispatch = useDispatch()
 
     const handleCreate = () => {
         setCreateCharacterOpen(false)
-        dispatch(addCharacter([name, server]))
+        dispatch(addCharacter(createCharacter(name, server, loaClass, itemLevel)))
     }
 
     const handleClickOpen = () => {
@@ -225,6 +228,36 @@ export default function App() {
                             fullWidth
                             variant="standard"
                         />
+                        <TextField
+                            onChange={event => setItemLevel(parseFloat(event.target.value))}
+                            autoFocus
+                            margin="dense"
+                            id="level"
+                            label="Item Level"
+                            type="name"
+                            fullWidth
+                            variant="standard"
+                        />
+                        <FormControl sx={{ m: 1, minWidth: 120 }}>
+                            <InputLabel>Class</InputLabel>
+                            <Select
+                                value={loaClass}
+                                onChange={(event: SelectChangeEvent<any>) => setLoaClass(event.target.value)}
+                                input={<OutlinedInput label="Class" />}
+                            >
+                                {Array.from(enumToMap(LoaClass).entries()).map(m => ({key: m[0], value: m[1]})).map(k => (<MenuItem value={k.key}>{k.value}</MenuItem>))}
+                            </Select>
+                        </FormControl>
+                        <FormControl sx={{ m: 1, minWidth: 120 }}>
+                            <InputLabel>Server</InputLabel>
+                            <Select
+                                value={server}
+                                onChange={(event: SelectChangeEvent<any>) => setServer(event.target.value )}
+                                input={<OutlinedInput label="Server" />}
+                            >
+                                {Array.from(enumToMap(Server).entries()).map(m => ({key: m[0], value: m[1]})).map(k => (<MenuItem value={k.key}>{k.value}</MenuItem>))}
+                            </Select>
+                        </FormControl>
                     </DialogContent>
                     <DialogActions>
                         <Button onClick={handleClose}>Cancel</Button>

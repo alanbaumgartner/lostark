@@ -2,7 +2,7 @@ import {createSlice, Draft, PayloadAction} from '@reduxjs/toolkit'
 
 import {Account, createAccount} from "../data/AccountModel";
 import {Task, TaskUpdate} from "../data/TaskModel";
-import {createCharacter, Server} from "../data/CharacterModel";
+import {Character} from "../data/CharacterModel";
 
 function getCharacterTaskList(account: Account, character: string): Task[] {
     let char = findCharacter(account, character)
@@ -16,7 +16,6 @@ function getCharacterTaskList(account: Account, character: string): Task[] {
 function getTaskList(account: Account): Task[] {
     return account.accountWeeklies.concat(account.accountDailies).concat(account.characters.flatMap(c => c.dailies.concat(c.weeklies)))
 }
-
 
 function findCharacter(account: Account, name: string) {
     return account.characters.find(char => char.name === name)
@@ -34,10 +33,16 @@ export const accountSlice = createSlice({
     name: 'account',
     initialState: createAccount(),
     reducers: {
-        addCharacter: (state: Draft<Account>, action: PayloadAction<[string, Server]>) => {
-            let char = findCharacter(state, action.payload[0])
+        addCharacter: (state: Draft<Account>, action: PayloadAction<Character>) => {
+            let char = findCharacter(state, action.payload.name)
             if (char === undefined) {
-                state.characters.push(createCharacter(action.payload[0], action.payload[1]))
+                state.characters.push(action.payload)
+            }
+            return state
+        },
+        removeCharacter: (state: Draft<Account>, action: PayloadAction<Character>) => {
+            if (action.payload !== undefined) {
+                state.characters = state.characters.filter(c => c.name !== action.payload.name)
             }
             return state
         },
@@ -60,6 +65,7 @@ export const accountSlice = createSlice({
 
 export const {
     addCharacter,
+    removeCharacter,
     update,
 } = accountSlice.actions
 
