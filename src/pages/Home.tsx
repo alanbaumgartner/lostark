@@ -1,13 +1,13 @@
 import * as React from 'react';
-import Dailies from "./Dailies";
-import Weeklies from "./Weeklies";
+import Dailies from "../components/Dailies";
+import Weeklies from "../components/Weeklies";
 import {useSelector} from "react-redux";
 import {RootState} from "../app/store";
-import CharacterComponent from "./CharacterComponent";
+import CharacterComponent from "../components/CharacterComponent";
 import {Character} from "../data/CharacterModel";
 import Box from "@mui/material/Box";
 
-export default function Account() {
+export default function Home() {
 
     const characters: Character[] = useSelector((state: RootState) => state.persistedReducer.characters)
 

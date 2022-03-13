@@ -31,7 +31,7 @@ export default function TaskComponent(task: Task, characterName?: string) {
             <Grid item xs={6}>
                 <Typography>{task.name}</Typography>
             </Grid>
-            <Grid item xs={6}>
+            <Grid item xs>
                 {(task.currentCount !== undefined && task.requiredCount !== undefined) ?
                     <Rating
                         name="customized-color"

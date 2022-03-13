@@ -17,7 +17,7 @@ import ListItemButton from '@mui/material/ListItemButton';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
 import InboxIcon from '@mui/icons-material/MoveToInbox';
-import Account from "./components/Account";
+import Home from "./pages/Home";
 import AddCircleIcon from '@mui/icons-material/AddCircle';
 import Dialog from "@mui/material/Dialog";
 import DialogTitle from "@mui/material/DialogTitle";
@@ -30,7 +30,7 @@ import {useDispatch} from "react-redux";
 import {addCharacter} from "./app/accountSlice";
 import {FormControl, InputLabel, MenuItem, OutlinedInput, Select, SelectChangeEvent} from "@mui/material";
 import {Link, Route, Routes} from "react-router-dom";
-import MarisShop from "./pages/maris/MarisShop";
+import MarisShop from "./pages/MarisShop";
 import {ShoppingCart} from "@mui/icons-material";
 
 const drawerWidth = 240;
@@ -289,7 +289,7 @@ export default function App() {
                     </DialogActions>
                 </Dialog>
                 <Routes>
-                    <Route path="/" element={<Account/>}/>
+                    <Route path="/" element={<Home/>}/>
                     <Route path="/maris" element={<MarisShop/>}/>
                 </Routes>
             </Box>

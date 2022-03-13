@@ -46,6 +46,10 @@ export const accountSlice = createSlice({
             }
             return state
         },
+        updateExchangeRate: (state: Draft<Account>, action: PayloadAction<number>) => {
+            state.exchangeRate = action.payload
+            return state
+        },
         update: (state: Draft<Account>, action: PayloadAction<TaskUpdate>) => {
             if (action.payload.character !== undefined) {
                 let task = findCharacterTask(state, action.payload.character, action.payload.task.name)
@@ -66,6 +70,7 @@ export const accountSlice = createSlice({
 export const {
     addCharacter,
     removeCharacter,
+    updateExchangeRate,
     update,
 } = accountSlice.actions
 
