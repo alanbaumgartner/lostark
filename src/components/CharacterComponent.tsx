@@ -1,5 +1,5 @@
 import * as React from 'react';
-import {Card, CardContent, CardMedia, Typography} from '@mui/material';
+import {Avatar, Card, CardActions, CardHeader, Grid, Typography} from '@mui/material';
 import {Character, loaClassMap} from "../data/CharacterModel";
 import {Task} from "../data/TaskModel";
 import TaskComponent from "./TaskComponent";
@@ -8,60 +8,48 @@ import IconButton from "@mui/material/IconButton";
 import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
 import {useDispatch} from "react-redux";
 import {removeCharacter} from "../app/accountSlice";
-
-function CharacterHeaderComponent(character: Character) {
-
-    const dispatch = useDispatch()
-
-    return (
-        <Card sx={{display: 'flex', width: '100%'}}>
-            <CardMedia
-                component="img"
-                sx={{height: '100%', width: '100%'}}
-                image={loaClassMap.get(character.loaClass)}
-                alt={character.loaClass}
-            />
-            <Box sx={{display: 'flex', flexDirection: 'column'}}>
-                <CardContent sx={{flex: '1 0 auto'}}>
-                    <Typography component="div" variant="h5">
-                        {character.name}
-                    </Typography>
-                    <Typography variant="subtitle1" color="text.secondary" component="div">
-                        {character.loaClass}
-                    </Typography>
-                    <Typography variant="subtitle1" color="text.secondary" component="div">
-                        {character.itemLevel}
-                    </Typography>
-                    <IconButton onClick={() => dispatch(removeCharacter(character))}>
-                        <DeleteForeverIcon/>
-                    </IconButton>
-                </CardContent>
-            </Box>
-        </Card>
-    );
-}
+import Divider from "@mui/material/Divider";
 
 export default function CharacterComponent(character: Character) {
-
+    const dispatch = useDispatch()
     return (
-        <Box
-            sx={{
-                display: 'flex',
-                alignItems: 'flex-start',
-                flexDirection: 'column',
-                p: 1,
-                m: 1,
-                bgcolor: 'gray',
-                borderRadius: 1,
-            }}
-        >
-            {CharacterHeaderComponent(character)}
-            {character.weeklies.map((task: Task, _: any) => (
-                TaskComponent(task, character.name)
-            ))}
-            {character.dailies.map((task: Task, _: any) => (
-                TaskComponent(task, character.name)
-            ))}
+        <Box sx={{height: '100%', width: '25%', px: 2}}>
+            <Card>
+                <CardHeader
+                    sx={{ bgcolor: 'background.blue'}}
+                    avatar={
+                        <Avatar src={loaClassMap.get(character.loaClass)} aria-label="class"/>
+                    }
+                    action={
+                        <IconButton onClick={() => dispatch(removeCharacter(character))}>
+                            <DeleteForeverIcon/>
+                        </IconButton>
+                    }
+                    title={character.name}
+                    subheader={character.itemLevel}
+                />
+                 <Divider/>
+                <CardActions>
+                    <Grid container rowSpacing={1} columnSpacing={{xs: 1, sm: 2, md: 3}}>
+
+                        <Grid item sm={12}>
+                            <Typography>Weeklies</Typography>
+                        </Grid>
+                        {character.weeklies.map((task: Task, _: any) => (
+                            TaskComponent(task, character.name)
+                        ))}
+                        <Grid item sm={12}>
+                        <Divider/>
+                        </Grid>
+                        <Grid item sm={12}>
+                            <Typography>Dailies</Typography>
+                        </Grid>
+                        {character.dailies.map((task: Task, _: any) => (
+                            TaskComponent(task, character.name)
+                        ))}
+                    </Grid>
+                </CardActions>
+            </Card>
         </Box>
     );
 }

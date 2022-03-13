@@ -1,5 +1,5 @@
 import * as React from 'react';
-import {Checkbox, FormControlLabel, Rating} from '@mui/material';
+import {Checkbox, Grid, Rating, Typography} from '@mui/material';
 import {update} from "../app/accountSlice";
 import {useDispatch} from "react-redux";
 import {Task} from "../data/TaskModel";
@@ -26,32 +26,36 @@ export default function TaskComponent(task: Task, characterName?: string) {
 
     const dispatch = useDispatch()
 
-    if (task.currentCount !== undefined && task.requiredCount !== undefined) {
-        return (
-            <FormControlLabel label={task.name} labelPlacement="start" key={task.name} control={
-                <Rating
-                    name="customized-color"
-                    onChange={(_, value) => {
-                        dispatch(update({task: task, character: characterName, update: createTaskUpdate(value ?? 0)}))
-                    }}
-                    max={task.requiredCount}
-                    defaultValue={task.currentCount}
-                    getLabelText={(value: number) => `${value} Heart${value !== 1 ? 's' : ''}`}
-                    precision={1}
-                    icon={<FavoriteIcon fontSize="inherit"/>}
-                    emptyIcon={<FavoriteBorderIcon fontSize="inherit"/>}
-                />
-            }/>
-        );
-    } else {
+    return (
+        <React.Fragment>
+            <Grid item xs={6}>
+                <Typography>{task.name}</Typography>
+            </Grid>
+            <Grid item xs={6}>
+                {(task.currentCount !== undefined && task.requiredCount !== undefined) ?
+                    <Rating
+                        name="customized-color"
+                        onChange={(_, value) => {
+                            dispatch(update({
+                                task: task,
+                                character: characterName,
+                                update: createTaskUpdate(value ?? 0)
+                            }))
+                        }}
+                        max={task.requiredCount}
+                        defaultValue={task.currentCount}
+                        getLabelText={(value: number) => `${value} Heart${value !== 1 ? 's' : ''}`}
+                        precision={1}
+                        icon={<FavoriteIcon fontSize="inherit"/>}
+                        emptyIcon={<FavoriteBorderIcon fontSize="inherit"/>}
+                    />
+                    :
+                    <Checkbox onChange={(event) => {
+                        dispatch(update({task: task, character: characterName, update: toggleTask}))
+                    }} checked={task.completed}/>}
 
-        return (
-            <FormControlLabel label={task.name} labelPlacement="start" key={task.name}
-                              control={<Checkbox onChange={(event) => {
-                                  dispatch(update({task: task, character: characterName, update: toggleTask}))
-                              }} checked={task.completed}/>}/>
-        );
-    }
-
+            </Grid>
+        </React.Fragment>
+    );
 
 }
