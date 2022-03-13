@@ -16,30 +16,30 @@ import GunslingerIcon from "../assets/class_icons/gunslingerIcon.png";
 import DeathbladeIcon from "../assets/class_icons/deathbladeIcon.png";
 import ShadowhunterIcon from "../assets/class_icons/shadowhunterIcon.png";
 
+export const loaClasses = [
+    "Berserker",
+    "Gunlancer",
+    "Bard",
+    "Wardancer",
+    "Scrapper",
+    "Soulfist",
+    "Sharpshooter",
+    "Deadeye",
+    "Artillerist",
+    "Paladin",
+    "Striker",
+    "Sorceress",
+    "Gunslinger",
+    "Deathblade",
+    "Shadowhunter",
+];
+
 export enum Server {
     NA_EAST = "NA East",
     NA_WEST = "NA West",
     EU_WEST = "EU West",
     EU_CENTRAL = "EU Central",
     SOUTH_AMERICA = "South America"
-}
-
-export enum LoaClass {
-    BERSERKER = "Berserker",
-    GUNLANCER = "Gunlancer",
-    BARD = "Bard",
-    WARDANCER = "Wardancer",
-    SCRAPPER = "Scrapper",
-    SOULFIST = "Soulfist",
-    SHARPSHOOTER = "Sharpshooter",
-    DEADEYE = "Deadeye",
-    ARTILLERIST = "Artillerist",
-    PALADIN = "Paladin",
-    STRIKER = "Striker",
-    SORCERESS = "Sorceress",
-    GUNSLINGER = "Gunslinger",
-    DEATHBLADE = "Deathblade",
-    SHADOWHUNTER = "Shadowhunter",
 }
 
 export function enumToMap(enumeration: any): Map<string, string | number> {
@@ -59,33 +59,33 @@ export function enumToMap(enumeration: any): Map<string, string | number> {
 }
 
 export const loaClassMap: Map<string, string> = new Map<string, string>([
-    ["BERSERKER", BerserkerIcon],
-    ["GUNLANCER", GunlancerIcon],
-    ["BARD", BardIcon],
-    ["WARDANCER", WardancerIcon],
-    ["SCRAPPER", ScrapperIcon],
-    ["SOULFIST", SoulfistIcon],
-    ["SHARPSHOOTER", SharpshooterIcon],
-    ["DEADEYE", DeadeyeIcon],
-    ["ARTILLERIST", ArtilleristIcon],
-    ["PALADIN", PaladinIcon],
-    ["STRIKER", StrikerIcon],
-    ["SORCERESS", SorceressIcon],
-    ["GUNSLINGER", GunslingerIcon],
-    ["DEATHBLADE", DeathbladeIcon],
-    ["SHADOWHUNTER", ShadowhunterIcon],
+    ["Berserker", BerserkerIcon],
+    ["Gunlancer", GunlancerIcon],
+    ["Bard", BardIcon],
+    ["Wardancer", WardancerIcon],
+    ["Scrapper", ScrapperIcon],
+    ["Soulfist", SoulfistIcon],
+    ["Sharpshooter", SharpshooterIcon],
+    ["Deadeye", DeadeyeIcon],
+    ["Artillerist", ArtilleristIcon],
+    ["Paladin", PaladinIcon],
+    ["Striker", StrikerIcon],
+    ["Sorceress", SorceressIcon],
+    ["Gunslinger", GunslingerIcon],
+    ["Deathblade", DeathbladeIcon],
+    ["Shadowhunter", ShadowhunterIcon],
 ])
 
 export interface Character {
     name: string,
     itemLevel: number,
-    loaClass: LoaClass
+    loaClass: string
     server: Server,
     weeklies: Task[],
     dailies: Task[]
 }
 
-export function createCharacter(name: string, server: Server, loaClass: LoaClass, itemLevel: number) {
+export function createCharacter(name: string, server: Server, loaClass: string, itemLevel: number) {
     return {
         name: name,
         server: server,

@@ -41,15 +41,6 @@ export default function TaskComponent(task: Task, characterName?: string) {
                     icon={<FavoriteIcon fontSize="inherit"/>}
                     emptyIcon={<FavoriteBorderIcon fontSize="inherit"/>}
                 />
-                // <ButtonGroup size="small">
-                //     <Button onClick={() => {
-                //         dispatch(update({task: task, character: characterName, update: decrementTask}))
-                //     }}>-</Button>
-                //     <Button disabled>{task.currentCount}</Button>
-                //     <Button onClick={() => {
-                //         dispatch(update({task: task, character: characterName, update: incrementTask}))
-                //     }}>+</Button>
-                // </ButtonGroup>
             }/>
         );
     } else {

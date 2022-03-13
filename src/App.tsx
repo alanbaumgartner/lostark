@@ -17,7 +17,6 @@ import ListItemButton from '@mui/material/ListItemButton';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
 import InboxIcon from '@mui/icons-material/MoveToInbox';
-import MailIcon from '@mui/icons-material/Mail';
 import Account from "./components/Account";
 import AddCircleIcon from '@mui/icons-material/AddCircle';
 import Dialog from "@mui/material/Dialog";
@@ -26,10 +25,13 @@ import DialogContent from "@mui/material/DialogContent";
 import TextField from "@mui/material/TextField";
 import DialogActions from "@mui/material/DialogActions";
 import Button from "@mui/material/Button";
-import {createCharacter, enumToMap, LoaClass, Server} from "./data/CharacterModel";
+import {createCharacter, enumToMap, loaClasses, Server} from "./data/CharacterModel";
 import {useDispatch} from "react-redux";
 import {addCharacter} from "./app/accountSlice";
 import {FormControl, InputLabel, MenuItem, OutlinedInput, Select, SelectChangeEvent} from "@mui/material";
+import {Link, Route, Routes} from "react-router-dom";
+import MarisShop from "./pages/maris/MarisShop";
+import {ShoppingCart} from "@mui/icons-material";
 
 const drawerWidth = 240;
 
@@ -118,7 +120,7 @@ export default function App() {
     const [name, setName] = useState("")
     const [server, setServer] = useState(Server.NA_EAST)
     const [itemLevel, setItemLevel] = useState(0)
-    const [loaClass, setLoaClass] = useState(LoaClass.BERSERKER)
+    const [loaClass, setLoaClass] = useState("Berserker")
     const [createCharacterOpen, setCreateCharacterOpen] = useState(false);
 
     const dispatch = useDispatch()
@@ -189,27 +191,48 @@ export default function App() {
                 </List>
                 <Divider/>
                 <List>
-                    {['All mail', 'Trash', 'Spam'].map((text, index) => (
-                        <ListItemButton
-                            key={text}
+                    <ListItemButton
+                        component={Link}
+                        to={'/'}
+                        key={'home'}
+                        sx={{
+                            minHeight: 48,
+                            justifyContent: open ? 'initial' : 'center',
+                            px: 2.5,
+                        }}
+                    >
+                        <ListItemIcon
                             sx={{
-                                minHeight: 48,
-                                justifyContent: open ? 'initial' : 'center',
-                                px: 2.5,
+                                minWidth: 0,
+                                mr: open ? 3 : 'auto',
+                                justifyContent: 'center',
                             }}
                         >
-                            <ListItemIcon
-                                sx={{
-                                    minWidth: 0,
-                                    mr: open ? 3 : 'auto',
-                                    justifyContent: 'center',
-                                }}
-                            >
-                                {index % 2 === 0 ? <InboxIcon/> : <MailIcon/>}
-                            </ListItemIcon>
-                            <ListItemText primary={text} sx={{opacity: open ? 1 : 0}}/>
-                        </ListItemButton>
-                    ))}
+                            <InboxIcon/>
+                        </ListItemIcon>
+                        <ListItemText primary={'Home'} sx={{opacity: open ? 1 : 0}}/>
+                    </ListItemButton>
+                    <ListItemButton
+                        component={Link}
+                        to={'/maris'}
+                        key={'maris'}
+                        sx={{
+                            minHeight: 48,
+                            justifyContent: open ? 'initial' : 'center',
+                            px: 2.5,
+                        }}
+                    >
+                        <ListItemIcon
+                            sx={{
+                                minWidth: 0,
+                                mr: open ? 3 : 'auto',
+                                justifyContent: 'center',
+                            }}
+                        >
+                            <ShoppingCart/>
+                        </ListItemIcon>
+                        <ListItemText primary={'Mari\'s Shop'} sx={{opacity: open ? 1 : 0}}/>
+                    </ListItemButton>
                 </List>
             </Drawer>
             <Box component="main" sx={{flexGrow: 1, p: 3}}>
@@ -238,24 +261,25 @@ export default function App() {
                             fullWidth
                             variant="standard"
                         />
-                        <FormControl sx={{ m: 1, minWidth: 120 }}>
+                        <FormControl sx={{m: 1, minWidth: 120}}>
                             <InputLabel>Class</InputLabel>
                             <Select
                                 value={loaClass}
                                 onChange={(event: SelectChangeEvent<any>) => setLoaClass(event.target.value)}
-                                input={<OutlinedInput label="Class" />}
+                                input={<OutlinedInput label="Class"/>}
                             >
-                                {Array.from(enumToMap(LoaClass).entries()).map(m => ({key: m[0], value: m[1]})).map(k => (<MenuItem value={k.key}>{k.value}</MenuItem>))}
+                                {loaClasses.map(k => (<MenuItem value={k}>{k}</MenuItem>))}
                             </Select>
                         </FormControl>
-                        <FormControl sx={{ m: 1, minWidth: 120 }}>
+                        <FormControl sx={{m: 1, minWidth: 120}}>
                             <InputLabel>Server</InputLabel>
                             <Select
                                 value={server}
-                                onChange={(event: SelectChangeEvent<any>) => setServer(event.target.value )}
-                                input={<OutlinedInput label="Server" />}
+                                onChange={(event: SelectChangeEvent<any>) => setServer(event.target.value)}
+                                input={<OutlinedInput label="Server"/>}
                             >
-                                {Array.from(enumToMap(Server).entries()).map(m => ({key: m[0], value: m[1]})).map(k => (<MenuItem value={k.key}>{k.value}</MenuItem>))}
+                                {Array.from(enumToMap(Server).entries()).map(m => ({key: m[0], value: m[1]})).map(k => (
+                                    <MenuItem value={k.key}>{k.value}</MenuItem>))}
                             </Select>
                         </FormControl>
                     </DialogContent>
@@ -264,8 +288,10 @@ export default function App() {
                         <Button onClick={handleCreate}>Create</Button>
                     </DialogActions>
                 </Dialog>
-
-                <Account/>
+                <Routes>
+                    <Route path="/" element={<Account/>}/>
+                    <Route path="/maris" element={<MarisShop/>}/>
+                </Routes>
             </Box>
         </Box>
     );

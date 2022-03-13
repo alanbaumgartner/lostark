@@ -6,6 +6,7 @@ import {Provider} from 'react-redux'
 import {PersistGate} from "redux-persist/integration/react";
 import {persistor, store} from "./app/store";
 import {createTheme, ThemeProvider} from "@mui/material";
+import {BrowserRouter} from "react-router-dom";
 
 const darkTheme = createTheme({
     palette: {
@@ -18,7 +19,9 @@ ReactDOM.render(
         <PersistGate persistor={persistor}>
             <ThemeProvider theme={darkTheme}>
                 <CssBaseline/>
-                <App/>
+                <BrowserRouter>
+                    <App/>
+                </BrowserRouter>
             </ThemeProvider>
         </PersistGate>
     </Provider>,

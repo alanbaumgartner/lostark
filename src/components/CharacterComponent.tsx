@@ -1,6 +1,6 @@
 import * as React from 'react';
 import {Card, CardContent, CardMedia, Typography} from '@mui/material';
-import {Character, LoaClass, loaClassMap} from "../data/CharacterModel";
+import {Character, loaClassMap} from "../data/CharacterModel";
 import {Task} from "../data/TaskModel";
 import TaskComponent from "./TaskComponent";
 import Box from "@mui/material/Box";
