@@ -141,7 +141,11 @@ export default function App() {
     return (
         <Box sx={{display: 'flex'}}>
             <CssBaseline/>
-            <AppBar position="fixed" open={open}>
+            <AppBar position="fixed"
+                    open={open}
+                    sx={{
+                        background: theme.palette.primary.main
+                    }}>
                 <Toolbar>
                     <IconButton
                         color="inherit"

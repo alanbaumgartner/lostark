@@ -21,6 +21,7 @@ import {useDispatch} from "react-redux";
 import {removeCharacter} from "../app/accountSlice";
 import Divider from "@mui/material/Divider";
 import {AccountBox, Settings} from "@mui/icons-material";
+import {useTheme} from "@mui/material/styles";
 
 function CharacterMenu(character: Character) {
 
@@ -103,19 +104,33 @@ function CharacterMenu(character: Character) {
 }
 
 export default function CharacterComponent(character: Character) {
+
+    const theme = useTheme()
+
     return (
         <Box sx={{height: '100%', width: '25%', px: 2}}>
             <Card>
                 <CardHeader
-                    sx={{bgcolor: 'background.blue'}}
+                    sx={{
+                        background: theme.palette.primary.main
+                    }}
                     avatar={
-                        <Avatar src={loaClassMap.get(character.loaClass)} aria-label="class"/>
+                        <Avatar sx={{width: 64, height: 64}} src={loaClassMap.get(character.loaClass)}
+                                aria-label="class"/>
                     }
                     action={
                         CharacterMenu(character)
                     }
-                    title={character.name}
-                    subheader={character.itemLevel}
+                    title={
+                        <Typography variant={"h5"}>
+                            {character.name}
+                        </Typography>
+                    }
+                    subheader={
+                        <Typography variant={"body1"}>
+                            {character.itemLevel}
+                        </Typography>
+                    }
                 />
                 <Divider/>
                 <CardActions>

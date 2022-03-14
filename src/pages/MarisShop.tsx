@@ -24,8 +24,11 @@ function ExchangeComponent() {
     const exchangeRate: number = useSelector((state: RootState) => state.persistedReducer.exchangeRate)
 
     return (
+        <Box>
+
         <Input value={exchangeRate} placeholder="1000"
                onChange={(event) => dispatch(updateExchangeRate(parseInt(event.target.value)))}/>
+        </Box>
     );
 }
 
@@ -103,33 +106,30 @@ function createData(
 
 const rowData = [
     // Tier 1
-    createData("https://lostarkcodex.com/icons/use_7_169.webp", "Star's breath x10", 10, 30),
-    createData("https://lostarkcodex.com/icons/use_8_251.webp", "Guardian stone fragment x800", 800, 72, 10),
-    createData("https://lostarkcodex.com/icons/use_8_250.webp", "Destruction stone fragment x300", 300, 120, 10),
-    createData("https://lostarkcodex.com/icons/use_8_231.webp", "Harmony shard pouch (S) x5", 5, 23),
-    createData("https://lostarkcodex.com/icons/use_8_232.webp", "Harmony shard pouch (M) x15", 15, 141),
-    createData("https://lostarkcodex.com/icons/use_10_25.webp", "Harmony leapstone x5", 5, 5),
-    createData("https://lostarkcodex.com/icons/use_10_25.webp", "Harmony leapstone x30", 30, 30),
+    createData("https://lostarkcodex.com/icons/use_7_169.webp", "Star's breath", 10, 30),
+    createData("https://lostarkcodex.com/icons/use_8_251.webp", "Guardian stone fragment", 800, 72, 10),
+    createData("https://lostarkcodex.com/icons/use_8_250.webp", "Destruction stone fragment", 300, 120, 10),
+    createData("https://lostarkcodex.com/icons/use_8_231.webp", "Harmony shard pouch (S)", 5, 23),
+    createData("https://lostarkcodex.com/icons/use_8_232.webp", "Harmony shard pouch (M)", 15, 141),
+    createData("https://lostarkcodex.com/icons/use_10_25.webp", "Harmony leapstone ", 30, 30),
     // Tier 2
-    createData("https://lostarkcodex.com/icons/use_7_16.webp", "Guardian stone x400", 400, 80, 10),
-    createData("https://lostarkcodex.com/icons/use_7_16.webp", "Guardian stone x800", 800, 160, 10),
-    createData("https://lostarkcodex.com/icons/use_7_15.webp", "Destruction stone x150", 150, 84, 10),
-    createData("https://lostarkcodex.com/icons/use_7_15.webp", "Destruction stone x300", 300, 167, 10),
-    createData("https://lostarkcodex.com/icons/use_8_229.webp", "Life shard pouch (S) x10", 10, 38),
-    createData("https://lostarkcodex.com/icons/use_10_24.webp", "Life leapstone x40", 40, 56),
-    createData("https://lostarkcodex.com/icons/use_7_167.webp", "Moon's breath x5", 5, 30),
-    createData("https://lostarkcodex.com/icons/use_9_69.webp", "Caldarr fusion material x10", 10, 70),
+    createData("https://lostarkcodex.com/icons/use_7_16.webp", "Guardian stone", 800, 160, 10),
+    createData("https://lostarkcodex.com/icons/use_7_15.webp", "Destruction stone", 300, 167, 10),
+    createData("https://lostarkcodex.com/icons/use_8_229.webp", "Life shard pouch (S)", 10, 38),
+    createData("https://lostarkcodex.com/icons/use_10_24.webp", "Life leapstone", 40, 56),
+    createData("https://lostarkcodex.com/icons/use_7_167.webp", "Moon's breath", 5, 30),
+    createData("https://lostarkcodex.com/icons/use_9_69.webp", "Caldarr fusion material", 10, 70),
     // Tier 3
-    createData("https://lostarkcodex.com/icons/use_6_104.webp", "Guardian stone crystal x800", 800, 240, 10),
-    createData("https://lostarkcodex.com/icons/use_6_105.webp", "Destruction stone crystal x300", 300, 240, 10),
-    createData("https://lostarkcodex.com/icons/use_8_225.webp", "Honor shard pouch (S) x10", 10, 56),
-    createData("https://lostarkcodex.com/icons/use_7_155.webp", "Honor leapstone x10", 10, 20),
-    createData("https://lostarkcodex.com/icons/use_7_156.webp", "Great Honor leapstone x5", 5, 50),
-    createData("https://lostarkcodex.com/icons/use_7_161.webp", "Solar grace x20", 20, 80),
-    createData("https://lostarkcodex.com/icons/use_7_162.webp", "Solar blessing x15", 15, 150),
-    createData("https://lostarkcodex.com/icons/use_7_163.webp", "Solar protection x3", 3, 150),
-    createData("https://lostarkcodex.com/icons/use_9_70.webp", "Simple Oreha fusion material x10", 10, 30),
-    createData("https://lostarkcodex.com/icons/use_9_71.webp", "Basic Oreha fusion material x10", 10, 40),
+    createData("https://lostarkcodex.com/icons/use_6_104.webp", "Guardian stone crystal", 800, 240, 10),
+    createData("https://lostarkcodex.com/icons/use_6_105.webp", "Destruction stone crystal", 300, 240, 10),
+    createData("https://lostarkcodex.com/icons/use_8_225.webp", "Honor shard pouch (S)", 10, 56),
+    createData("https://lostarkcodex.com/icons/use_7_155.webp", "Honor leapstone", 10, 20),
+    createData("https://lostarkcodex.com/icons/use_7_156.webp", "Great Honor leapstone", 5, 50),
+    createData("https://lostarkcodex.com/icons/use_7_161.webp", "Solar grace", 20, 80),
+    createData("https://lostarkcodex.com/icons/use_7_162.webp", "Solar blessing", 15, 150),
+    createData("https://lostarkcodex.com/icons/use_7_163.webp", "Solar protection", 3, 150),
+    createData("https://lostarkcodex.com/icons/use_9_70.webp", "Simple Oreha fusion material", 10, 30),
+    createData("https://lostarkcodex.com/icons/use_9_71.webp", "Basic Oreha fusion material", 10, 40),
 ];
 
 
