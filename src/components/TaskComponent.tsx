@@ -1,5 +1,5 @@
 import * as React from 'react';
-import {Checkbox, Grid, Rating, Typography} from '@mui/material';
+import {Checkbox, ListItem, ListItemText, Rating} from '@mui/material';
 import {update} from "../app/accountSlice";
 import {useDispatch} from "react-redux";
 import {Task} from "../data/TaskModel";
@@ -26,15 +26,14 @@ export default function TaskComponent(task: Task, characterName?: string) {
 
     const dispatch = useDispatch()
 
-    return (
-        <React.Fragment>
-            <Grid item xs={6}>
-                <Typography>{task.name}</Typography>
-            </Grid>
-            <Grid item xs>
-                {(task.currentCount !== undefined && task.requiredCount !== undefined) ?
+    if (task.currentCount !== undefined && task.requiredCount !== undefined) {
+        return (
+            <ListItem
+                key={task.name}
+                disablePadding
+                secondaryAction={
                     <Rating
-                        name="customized-color"
+                        name={task.name}
                         onChange={(_, value) => {
                             dispatch(update({
                                 task: task,
@@ -49,13 +48,33 @@ export default function TaskComponent(task: Task, characterName?: string) {
                         icon={<FavoriteIcon fontSize="inherit"/>}
                         emptyIcon={<FavoriteBorderIcon fontSize="inherit"/>}
                     />
-                    :
-                    <Checkbox onChange={(event) => {
-                        dispatch(update({task: task, character: characterName, update: toggleTask}))
-                    }} checked={task.completed}/>}
+                }
+            >
+                <ListItem>
+                    <ListItemText id={task.name} primary={task.name}/>
+                </ListItem>
+            </ListItem>
+        );
+    }
 
-            </Grid>
-        </React.Fragment>
+    return (
+        <ListItem
+            key={task.name}
+            secondaryAction={
+                <Checkbox
+                    edge="end"
+                    onChange={(_) => {
+                        dispatch(update({task: task, character: characterName, update: toggleTask}))
+                    }}
+                    checked={task.completed}
+                />
+            }
+            disablePadding
+        >
+            <ListItem>
+                <ListItemText id={task.name} primary={task.name}/>
+            </ListItem>
+        </ListItem>
     );
 
 }

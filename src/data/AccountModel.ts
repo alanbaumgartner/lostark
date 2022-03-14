@@ -9,5 +9,10 @@ export interface Account {
 }
 
 export function createAccount(): Account {
-    return {accountDailies: generateDailyAccountData(), accountWeeklies: generateWeeklyAccountData(), characters: [], exchangeRate: 1000}
+    return {
+        accountDailies: generateDailyAccountData(),
+        accountWeeklies: generateWeeklyAccountData(),
+        characters: [],
+        exchangeRate: 1000
+    }
 }

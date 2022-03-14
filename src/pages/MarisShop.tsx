@@ -26,8 +26,8 @@ function ExchangeComponent() {
     return (
         <Box>
 
-        <Input value={exchangeRate} placeholder="1000"
-               onChange={(event) => dispatch(updateExchangeRate(parseInt(event.target.value)))}/>
+            <Input value={exchangeRate} placeholder="1000"
+                   onChange={(event) => dispatch(updateExchangeRate(parseInt(event.target.value)))}/>
         </Box>
     );
 }

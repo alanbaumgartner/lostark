@@ -1,19 +1,18 @@
 import * as React from 'react';
+import {useState} from 'react';
 import {
     Avatar,
     Card,
     CardActions,
     CardHeader,
-    Grid,
     ListItemIcon,
     Menu,
     MenuItem,
+    Stack,
     Tooltip,
     Typography
 } from '@mui/material';
 import {Character, loaClassMap} from "../data/CharacterModel";
-import {Task} from "../data/TaskModel";
-import TaskComponent from "./TaskComponent";
 import Box from "@mui/material/Box";
 import IconButton from "@mui/material/IconButton";
 import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
@@ -22,21 +21,54 @@ import {removeCharacter} from "../app/accountSlice";
 import Divider from "@mui/material/Divider";
 import {AccountBox, Settings} from "@mui/icons-material";
 import {useTheme} from "@mui/material/styles";
+import TaskListComponent from "./TaskListComponent";
+import UpdateCharacterDialog from "./UpdateCharacterDialog";
+
+// function AbyssWeeklies() {
+//
+//     const [open, setOpen] = React.useState(true);
+//
+//     const handleClick = () => {
+//         setOpen(!open);
+//     };
+//
+//     return (
+//         <Collapse in={open} timeout="auto" unmountOnExit>
+//             <List component="div" disablePadding>
+//                 <ListItemButton sx={{ pl: 4 }}>
+//                     <ListItemIcon>
+//                         <StarBorder />
+//                     </ListItemIcon>
+//                     <ListItemText primary="Starred" />
+//                 </ListItemButton>
+//             </List>
+//         </Collapse>
+//     );
+// }
 
 function CharacterMenu(character: Character) {
 
     const dispatch = useDispatch()
 
+    const [updateDialogOpen, setUpdateDialogOpen] = useState(false)
+
+    const handleDialogClose = () => {
+        setUpdateDialogOpen(false)
+    }
+
     const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
     const open = Boolean(anchorEl);
+
     const handleClick = (event: React.MouseEvent<HTMLElement>) => {
         setAnchorEl(event.currentTarget);
     };
+
     const handleClose = () => {
         setAnchorEl(null);
     };
     return (
         <React.Fragment>
+            <UpdateCharacterDialog character={character} open={updateDialogOpen} onClose={handleDialogClose}/>
             <Box sx={{display: 'flex', alignItems: 'center', textAlign: 'center'}}>
                 <Tooltip title="Character Settings">
                     <IconButton
@@ -86,7 +118,7 @@ function CharacterMenu(character: Character) {
                 transformOrigin={{horizontal: 'right', vertical: 'top'}}
                 anchorOrigin={{horizontal: 'right', vertical: 'bottom'}}
             >
-                <MenuItem>
+                <MenuItem onClick={() => setUpdateDialogOpen(true)}>
                     <ListItemIcon>
                         <AccountBox/>
                     </ListItemIcon>
@@ -128,30 +160,19 @@ export default function CharacterComponent(character: Character) {
                     }
                     subheader={
                         <Typography variant={"body1"}>
-                            {character.itemLevel}
+                            Item Level: {character.itemLevel}
                         </Typography>
                     }
                 />
                 <Divider/>
                 <CardActions>
-                    <Grid container rowSpacing={1} columnSpacing={{xs: 1, sm: 2, md: 3}}>
-
-                        <Grid item sm={12}>
-                            <Typography>Weeklies</Typography>
-                        </Grid>
-                        {character.weeklies.map((task: Task, _: any) => (
-                            TaskComponent(task, character.name)
-                        ))}
-                        <Grid item sm={12}>
-                            <Divider/>
-                        </Grid>
-                        <Grid item sm={12}>
-                            <Typography>Dailies</Typography>
-                        </Grid>
-                        {character.dailies.map((task: Task, _: any) => (
-                            TaskComponent(task, character.name)
-                        ))}
-                    </Grid>
+                    <Stack sx={{width: "100%"}}>
+                        <Typography>Dailies</Typography>
+                        {TaskListComponent(character.dailies, character.name)}
+                        <Divider/>
+                        <Typography>Weeklies</Typography>
+                        {TaskListComponent(character.weeklies, character.name)}
+                    </Stack>
                 </CardActions>
             </Card>
         </Box>

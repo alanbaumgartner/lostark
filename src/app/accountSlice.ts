@@ -40,6 +40,13 @@ export const accountSlice = createSlice({
             }
             return state
         },
+        updateCharacter: (state: Draft<Account>, action: PayloadAction<Character>) => {
+            let char = findCharacter(state, action.payload.name)
+            if (char !== undefined) {
+                char.itemLevel = action.payload.itemLevel
+            }
+            return state
+        },
         removeCharacter: (state: Draft<Account>, action: PayloadAction<Character>) => {
             if (action.payload !== undefined) {
                 state.characters = state.characters.filter(c => c.name !== action.payload.name)
@@ -69,6 +76,7 @@ export const accountSlice = createSlice({
 
 export const {
     addCharacter,
+    updateCharacter,
     removeCharacter,
     updateExchangeRate,
     update,
