@@ -4,7 +4,7 @@ import storage from 'redux-persist/lib/storage'
 import {accountSlice} from "./accountSlice";
 
 const persistConfig = {
-    key: 'root',
+    key: 'loa_v1',
     storage,
 }
 

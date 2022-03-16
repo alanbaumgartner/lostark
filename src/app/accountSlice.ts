@@ -1,23 +1,23 @@
 import {createSlice, Draft, PayloadAction} from '@reduxjs/toolkit'
 
 import {Account, createAccount} from "../data/AccountModel";
-import {Task, TaskUpdate} from "../data/TaskModel";
+import {CharacterTask, Task, TaskUpdate} from "../data/TaskModel";
 import {Character} from "../data/CharacterModel";
 
 function getCharacterTaskList(account: Account, character: string): Task[] {
     let char = findCharacter(account, character)
-    let tasks: Task[] = []
+    let tasks: CharacterTask[] = []
     if (char !== undefined) {
         tasks = tasks.concat(char.weeklies.concat(char.dailies))
     }
-    return tasks.concat(account.accountWeeklies.concat(account.accountDailies))
+    return tasks
 }
 
 function getTaskList(account: Account): Task[] {
     return account.accountWeeklies.concat(account.accountDailies).concat(account.characters.flatMap(c => c.dailies.concat(c.weeklies)))
 }
 
-function findCharacter(account: Account, name: string) {
+export function findCharacter(account: Account, name: string) {
     return account.characters.find(char => char.name === name)
 }
 

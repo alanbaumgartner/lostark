@@ -1,4 +1,4 @@
-import {generateDailyCharacterData, generateWeeklyCharacterData, Task} from "./TaskModel";
+import {CharacterTask, generateDailyCharacterData, generateWeeklyCharacterData} from "./TaskModel";
 
 import BerserkerIcon from "../assets/class_icons/berserkerIcon.png";
 import GunlancerIcon from "../assets/class_icons/gunlancerIcon.png";
@@ -81,8 +81,8 @@ export interface Character {
     itemLevel: number,
     loaClass: string
     server: Server,
-    weeklies: Task[],
-    dailies: Task[]
+    weeklies: CharacterTask[],
+    dailies: CharacterTask[]
 }
 
 export function createCharacter(name: string, server: Server, loaClass: string, itemLevel: number) {

@@ -23,28 +23,7 @@ import {AccountBox, Settings} from "@mui/icons-material";
 import {useTheme} from "@mui/material/styles";
 import TaskListComponent from "./TaskListComponent";
 import UpdateCharacterDialog from "./UpdateCharacterDialog";
-
-// function AbyssWeeklies() {
-//
-//     const [open, setOpen] = React.useState(true);
-//
-//     const handleClick = () => {
-//         setOpen(!open);
-//     };
-//
-//     return (
-//         <Collapse in={open} timeout="auto" unmountOnExit>
-//             <List component="div" disablePadding>
-//                 <ListItemButton sx={{ pl: 4 }}>
-//                     <ListItemIcon>
-//                         <StarBorder />
-//                     </ListItemIcon>
-//                     <ListItemText primary="Starred" />
-//                 </ListItemButton>
-//             </List>
-//         </Collapse>
-//     );
-// }
+import {canDo} from "../data/TaskModel";
 
 function CharacterMenu(character: Character) {
 
@@ -139,6 +118,10 @@ export default function CharacterComponent(character: Character) {
 
     const theme = useTheme()
 
+    const abyss = character.weeklies.filter(task => task.name.startsWith("Abyss - ") && canDo(task, character))
+
+    const [open, setOpen] = useState(false)
+
     return (
         <Box sx={{height: '100%', width: '25%', px: 2}}>
             <Card>
@@ -167,11 +150,27 @@ export default function CharacterComponent(character: Character) {
                 <Divider/>
                 <CardActions>
                     <Stack sx={{width: "100%"}}>
-                        <Typography>Dailies</Typography>
-                        {TaskListComponent(character.dailies, character.name)}
-                        <Divider/>
-                        <Typography>Weeklies</Typography>
-                        {TaskListComponent(character.weeklies, character.name)}
+                        {TaskListComponent(character.dailies.filter(task => canDo(task, character)), "Dailies", character)}
+                        {TaskListComponent(character.weeklies.filter(task => !task.name.startsWith("Abyss - ") && canDo(task, character)), "Weeklies", character)}
+                        {TaskListComponent(abyss, "Abyss", character)}
+                        {/*<Typography>Weeklies</Typography>*/}
+                        {/*{abyss.length > 0 ?                         <div>*/}
+                        {/*    <ListItem button onClick={() => setOpen(!open)}>*/}
+                        {/*        <ListItemText primary={"Abyss"}/>*/}
+                        {/*        {open ? <ExpandLess/> : <ExpandMore/>}*/}
+                        {/*    </ListItem>*/}
+                        {/*    <Collapse*/}
+
+                        {/*        in={open}*/}
+                        {/*        timeout='auto'*/}
+                        {/*        unmountOnExit*/}
+                        {/*    >*/}
+                        {/*            {TaskListComponent(abyss, character)}*/}
+
+                        {/*    </Collapse>*/}
+                        {/*    <Divider/>*/}
+                        {/*</div> : <div/>}*/}
+                        {/*{TaskListComponent(character.weeklies.filter(task => !task.name.startsWith("Abyss - ") && canDo(task, character)), character)}*/}
                     </Stack>
                 </CardActions>
             </Card>

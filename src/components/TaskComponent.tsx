@@ -5,6 +5,7 @@ import {useDispatch} from "react-redux";
 import {Task} from "../data/TaskModel";
 import FavoriteIcon from '@mui/icons-material/Favorite';
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
+import {Character} from "../data/CharacterModel";
 
 function toggleTask(task: Task) {
     task.completed = !task.completed
@@ -22,7 +23,7 @@ function createTaskUpdate(amount: number) {
     }
 }
 
-export default function TaskComponent(task: Task, characterName?: string) {
+export default function TaskComponent(task: Task, character?: Character) {
 
     const dispatch = useDispatch()
 
@@ -37,7 +38,7 @@ export default function TaskComponent(task: Task, characterName?: string) {
                         onChange={(_, value) => {
                             dispatch(update({
                                 task: task,
-                                character: characterName,
+                                character: character?.name,
                                 update: createTaskUpdate(value ?? 0)
                             }))
                         }}
@@ -51,7 +52,7 @@ export default function TaskComponent(task: Task, characterName?: string) {
                 }
             >
                 <ListItem>
-                    <ListItemText id={task.name} primary={task.name}/>
+                    <ListItemText id={task.name} primary={task.name.replace("Abyss - ", "")}/>
                 </ListItem>
             </ListItem>
         );
@@ -64,7 +65,7 @@ export default function TaskComponent(task: Task, characterName?: string) {
                 <Checkbox
                     edge="end"
                     onChange={(_) => {
-                        dispatch(update({task: task, character: characterName, update: toggleTask}))
+                        dispatch(update({task: task, character: character?.name, update: toggleTask}))
                     }}
                     checked={task.completed}
                 />
@@ -72,7 +73,7 @@ export default function TaskComponent(task: Task, characterName?: string) {
             disablePadding
         >
             <ListItem>
-                <ListItemText id={task.name} primary={task.name}/>
+                <ListItemText id={task.name} primary={task.name.replace("Abyss - ", "")}/>
             </ListItem>
         </ListItem>
     );
