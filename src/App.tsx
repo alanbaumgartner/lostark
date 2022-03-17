@@ -21,8 +21,9 @@ import Home from "./pages/Home";
 import AddCircleIcon from '@mui/icons-material/AddCircle';
 import {Link, Route, Routes} from "react-router-dom";
 import MarisShop from "./pages/MarisShop";
-import {ShoppingCart} from "@mui/icons-material";
+import {GitHub, ShoppingCart} from "@mui/icons-material";
 import CreateCharacterDialog from "./components/CreateCharacterDialog";
+import {Avatar} from "@mui/material";
 
 const drawerWidth = 240;
 
@@ -144,9 +145,14 @@ export default function App() {
                     >
                         <MenuIcon/>
                     </IconButton>
-                    <Typography variant="h6" noWrap component="div">
+                    <Typography variant="h6" noWrap component="div" sx={{ flexGrow: 1}}>
                         Lost Ark Tools
                     </Typography>
+                    <Box sx={{flexGrow: 0}}>
+                        <IconButton onClick={()=> window.open("https://github.com/alanbaumgartner/lostark", "_blank")}>
+                            <GitHub/>
+                        </IconButton>
+                    </Box>
                 </Toolbar>
             </AppBar>
             <Drawer variant="permanent" open={open}>
