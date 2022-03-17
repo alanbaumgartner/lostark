@@ -6,7 +6,7 @@ import {RootState} from "../app/store";
 import CharacterComponent from "../components/CharacterComponent";
 import {Character} from "../data/CharacterModel";
 import Box from "@mui/material/Box";
-import {Stack} from "@mui/material";
+import {Grid, Stack} from "@mui/material";
 
 export default function Home() {
 
@@ -27,10 +27,15 @@ export default function Home() {
                 <Dailies/>
                 <Weeklies/>
             </Stack>
-            {characters.map((char: Character, _: any) => (
-                <CharacterComponent name={char.name} server={char.server} weeklies={char.weeklies}
-                                    dailies={char.dailies} loaClass={char.loaClass} itemLevel={char.itemLevel}/>
-            ))}
+            <Box>
+                <Grid container spacing={2}>
+                    {characters.map((char: Character, _: any) => (
+                        <CharacterComponent name={char.name} server={char.server} weeklies={char.weeklies}
+                                            dailies={char.dailies} loaClass={char.loaClass}
+                                            itemLevel={char.itemLevel}/>
+                    ))}
+                </Grid>
+            </Box>
         </Box>
     );
 }

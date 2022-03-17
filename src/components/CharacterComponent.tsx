@@ -5,6 +5,7 @@ import {
     Card,
     CardActions,
     CardHeader,
+    Grid,
     ListItemIcon,
     Menu,
     MenuItem,
@@ -120,10 +121,8 @@ export default function CharacterComponent(character: Character) {
 
     const abyss = character.weeklies.filter(task => task.name.startsWith("Abyss - ") && canDo(task, character))
 
-    const [open, setOpen] = useState(false)
-
     return (
-        <Box sx={{height: '100%', width: '25%', px: 2}}>
+        <Grid item sx={{height: '100%', width: '25%'}}>
             <Card>
                 <CardHeader
                     sx={{
@@ -153,27 +152,9 @@ export default function CharacterComponent(character: Character) {
                         {TaskListComponent(character.dailies.filter(task => canDo(task, character)), "Dailies", character)}
                         {TaskListComponent(character.weeklies.filter(task => !task.name.startsWith("Abyss - ") && canDo(task, character)), "Weeklies", character)}
                         {TaskListComponent(abyss, "Abyss", character)}
-                        {/*<Typography>Weeklies</Typography>*/}
-                        {/*{abyss.length > 0 ?                         <div>*/}
-                        {/*    <ListItem button onClick={() => setOpen(!open)}>*/}
-                        {/*        <ListItemText primary={"Abyss"}/>*/}
-                        {/*        {open ? <ExpandLess/> : <ExpandMore/>}*/}
-                        {/*    </ListItem>*/}
-                        {/*    <Collapse*/}
-
-                        {/*        in={open}*/}
-                        {/*        timeout='auto'*/}
-                        {/*        unmountOnExit*/}
-                        {/*    >*/}
-                        {/*            {TaskListComponent(abyss, character)}*/}
-
-                        {/*    </Collapse>*/}
-                        {/*    <Divider/>*/}
-                        {/*</div> : <div/>}*/}
-                        {/*{TaskListComponent(character.weeklies.filter(task => !task.name.startsWith("Abyss - ") && canDo(task, character)), character)}*/}
                     </Stack>
                 </CardActions>
             </Card>
-        </Box>
+        </Grid>
     );
 }
