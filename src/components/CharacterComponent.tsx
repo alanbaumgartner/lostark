@@ -122,7 +122,7 @@ export default function CharacterComponent(character: Character) {
     const abyss = character.weeklies.filter(task => task.name.startsWith("Abyss - ") && canDo(task, character))
 
     return (
-        <Grid item sx={{height: '100%', width: '25%'}}>
+        <Grid item xs={3}>
             <Card>
                 <CardHeader
                     sx={{

@@ -27,7 +27,7 @@ export default function Home() {
                 <Dailies/>
                 <Weeklies/>
             </Stack>
-            <Box>
+            <Box sx={{width: "80%"}}>
                 <Grid container spacing={2}>
                     {characters.map((char: Character, _: any) => (
                         <CharacterComponent name={char.name} server={char.server} weeklies={char.weeklies}
