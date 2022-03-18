@@ -11,7 +11,7 @@ export default function Timers() {
     const theme = useTheme()
 
     return (
-        <Box sx={{px: 2, marginTop: 2}}>
+        <Box sx={{px: 2}}>
             <Card sx={{height: '100%'}}>
                 <CardContent sx={{background: theme.palette.primary.main}}>
                     <Typography variant={"h5"} sx={{

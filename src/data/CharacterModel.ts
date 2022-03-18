@@ -34,13 +34,13 @@ export const loaClasses = [
     "Shadowhunter",
 ];
 
-export enum Server {
-    NA_EAST = "NA East",
-    NA_WEST = "NA West",
-    EU_WEST = "EU West",
-    EU_CENTRAL = "EU Central",
-    SOUTH_AMERICA = "South America"
-}
+export const servers = [
+    "NA East",
+    "NA West",
+    "EU West",
+    "EU Central",
+    "South America"
+];
 
 export function enumToMap(enumeration: any): Map<string, string | number> {
     const map = new Map<string, string | number>();
@@ -80,15 +80,13 @@ export interface Character {
     name: string,
     itemLevel: number,
     loaClass: string
-    server: Server,
     weeklies: CharacterTask[],
     dailies: CharacterTask[]
 }
 
-export function createCharacter(name: string, server: Server, loaClass: string, itemLevel: number) {
+export function createCharacter(name: string, loaClass: string, itemLevel: number) {
     return {
         name: name,
-        server: server,
         dailies: generateDailyCharacterData(),
         weeklies: generateWeeklyCharacterData(),
         loaClass: loaClass,

@@ -32,7 +32,7 @@ export default function Home() {
             <Box sx={{width: "80%"}}>
                 <Grid container spacing={2}>
                     {characters.map((char: Character, _: number) => (
-                        <CharacterComponent name={char.name} server={char.server} weeklies={char.weeklies}
+                        <CharacterComponent name={char.name} weeklies={char.weeklies}
                                             dailies={char.dailies} loaClass={char.loaClass}
                                             itemLevel={char.itemLevel}/>
                     ))}

@@ -3,7 +3,7 @@ import DialogTitle from "@mui/material/DialogTitle";
 import DialogContent from "@mui/material/DialogContent";
 import TextField from "@mui/material/TextField";
 import {FormControl, InputLabel, MenuItem, OutlinedInput, Select, SelectChangeEvent} from "@mui/material";
-import {createCharacter, enumToMap, loaClasses, Server} from "../data/CharacterModel";
+import {createCharacter, enumToMap, loaClasses} from "../data/CharacterModel";
 import DialogActions from "@mui/material/DialogActions";
 import Button from "@mui/material/Button";
 import * as React from "react";
@@ -19,7 +19,6 @@ export interface CreateCharacterDialogProps {
 export default function CreateCharacterDialog(props: CreateCharacterDialogProps) {
 
     const [name, setName] = useState("")
-    const [server, setServer] = useState(Server.NA_EAST)
     const [itemLevel, setItemLevel] = useState(0)
     const [loaClass, setLoaClass] = useState("Berserker")
 
@@ -33,7 +32,7 @@ export default function CreateCharacterDialog(props: CreateCharacterDialogProps)
 
     const handleCreate = () => {
         onClose()
-        dispatch(addCharacter(createCharacter(name, server, loaClass, itemLevel)))
+        dispatch(addCharacter(createCharacter(name, loaClass, itemLevel)))
     }
     return (
         <Dialog open={open} onClose={handleClose}>
@@ -67,17 +66,6 @@ export default function CreateCharacterDialog(props: CreateCharacterDialogProps)
                         input={<OutlinedInput label="Class"/>}
                     >
                         {loaClasses.map(k => (<MenuItem key={k} value={k}>{k}</MenuItem>))}
-                    </Select>
-                </FormControl>
-                <FormControl sx={{m: 1, minWidth: 120}}>
-                    <InputLabel>Server</InputLabel>
-                    <Select
-                        value={server}
-                        onChange={(event: SelectChangeEvent<any>) => setServer(event.target.value)}
-                        input={<OutlinedInput label="Server"/>}
-                    >
-                        {Array.from(enumToMap(Server).entries()).map(m => ({key: m[0], value: m[1]})).map(k => (
-                            <MenuItem key={k.key} value={k.key}>{k.value}</MenuItem>))}
                     </Select>
                 </FormControl>
             </DialogContent>

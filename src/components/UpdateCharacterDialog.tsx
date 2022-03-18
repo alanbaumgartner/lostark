@@ -31,7 +31,7 @@ export default function UpdateCharacterDialog(props: UpdateCharacterDialogProps)
 
     const handleCreate = () => {
         onClose()
-        dispatch(updateCharacter(createCharacter(props.character.name, props.character.server, props.character.loaClass, itemLevel)))
+        dispatch(updateCharacter(createCharacter(props.character.name, props.character.loaClass, itemLevel)))
     }
     return (
         <Dialog open={open} onClose={handleClose}>
