@@ -78,7 +78,7 @@ function findCharacterTask(account: Account, characterName: string, name: string
         account.lastDailyUpdate = moment().toJSON()
         return task
     }
-    task = getDailyCharacterTaskList(account, characterName).find(task => task.name === name)
+    task = getWeeklyCharacterTaskList(account, characterName).find(task => task.name === name)
     if (task !== undefined) {
         account.lastWeeklyUpdate = moment().toJSON()
         return task
