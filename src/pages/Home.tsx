@@ -7,6 +7,7 @@ import CharacterComponent from "../components/CharacterComponent";
 import {Character} from "../data/CharacterModel";
 import Box from "@mui/material/Box";
 import {Grid, Stack} from "@mui/material";
+import Timers from "../components/Timers";
 
 export default function Home() {
 
@@ -24,6 +25,7 @@ export default function Home() {
             }}
         >
             <Stack sx={{width: "20%"}}>
+                <Timers/>
                 <Dailies/>
                 <Weeklies/>
             </Stack>

@@ -66,7 +66,7 @@ export default function CreateCharacterDialog(props: CreateCharacterDialogProps)
                         onChange={(event: SelectChangeEvent<any>) => setLoaClass(event.target.value)}
                         input={<OutlinedInput label="Class"/>}
                     >
-                        {loaClasses.map(k => (<MenuItem value={k}>{k}</MenuItem>))}
+                        {loaClasses.map(k => (<MenuItem key={k} value={k}>{k}</MenuItem>))}
                     </Select>
                 </FormControl>
                 <FormControl sx={{m: 1, minWidth: 120}}>
@@ -77,7 +77,7 @@ export default function CreateCharacterDialog(props: CreateCharacterDialogProps)
                         input={<OutlinedInput label="Server"/>}
                     >
                         {Array.from(enumToMap(Server).entries()).map(m => ({key: m[0], value: m[1]})).map(k => (
-                            <MenuItem value={k.key}>{k.value}</MenuItem>))}
+                            <MenuItem key={k.key} value={k.key}>{k.value}</MenuItem>))}
                     </Select>
                 </FormControl>
             </DialogContent>

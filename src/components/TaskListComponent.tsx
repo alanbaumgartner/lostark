@@ -29,13 +29,22 @@ export default function TaskListComponent(tasks: Task[], name?: string, characte
 
 
     const progress = (current / total) * 100
+    const color = () => {
+        if (progress >= 85) {
+            return "green"
+        } else if (progress >= 50) {
+            return "yellow"
+        } else {
+            return "red"
+        }
+    }
 
     if (name !== undefined) {
         return (
             <React.Fragment>
                 <ListItem button onClick={() => setOpen(!open)}>
                     <ListItemText primary={name}/>
-                    <Typography variant="body2" color="text.secondary">{`${Math.round(
+                    <Typography variant="body2" color={color()}>{`${Math.round(
                         progress,
                     )}%`}</Typography>
                     {open ? <ExpandLess/> : <ExpandMore/>}

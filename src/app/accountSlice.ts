@@ -3,18 +3,69 @@ import {createSlice, Draft, PayloadAction} from '@reduxjs/toolkit'
 import {Account, createAccount} from "../data/AccountModel";
 import {CharacterTask, Task, TaskUpdate} from "../data/TaskModel";
 import {Character} from "../data/CharacterModel";
+import moment from "moment";
+import {getLastDailyReset, getLastWeeklyReset} from "../data/TimeUtility";
 
-function getCharacterTaskList(account: Account, character: string): Task[] {
+function resetDailies(account: Account) {
+    account.accountDailies.forEach(task => {
+        if (task.currentCount !== undefined) {
+            task.currentCount = 0
+        }
+        task.completed = false
+    })
+    account.characters.forEach(char => {
+        char.dailies.forEach(task => {
+            if (task.currentCount !== undefined) {
+                task.currentCount = 0
+            }
+            task.completed = false
+        })
+    })
+    return account
+}
+
+function resetWeeklies(account: Account) {
+    account.accountWeeklies.forEach(task => {
+        if (task.currentCount !== undefined) {
+            task.currentCount = 0
+        }
+        task.completed = false
+    })
+    account.characters.forEach(char => {
+        char.weeklies.forEach(task => {
+            if (task.currentCount !== undefined) {
+                task.currentCount = 0
+            }
+            task.completed = false
+        })
+    })
+    return account
+}
+
+function getWeeklyCharacterTaskList(account: Account, character: string): Task[] {
     let char = findCharacter(account, character)
     let tasks: CharacterTask[] = []
     if (char !== undefined) {
-        tasks = tasks.concat(char.weeklies.concat(char.dailies))
+        tasks = tasks.concat(char.weeklies)
     }
     return tasks
 }
 
-function getTaskList(account: Account): Task[] {
-    return account.accountWeeklies.concat(account.accountDailies).concat(account.characters.flatMap(c => c.dailies.concat(c.weeklies)))
+function getDailyCharacterTaskList(account: Account, character: string): Task[] {
+    let char = findCharacter(account, character)
+    let tasks: CharacterTask[] = []
+    if (char !== undefined) {
+        tasks = tasks.concat(char.dailies)
+    }
+    return tasks
+}
+
+function getDailyTaskList(account: Account): Task[] {
+    return account.accountDailies.concat(account.characters.flatMap(c => c.dailies))
+}
+
+function getWeeklyTaskList(account: Account): Task[] {
+    return account.accountWeeklies.concat(account.characters.flatMap(c => c.weeklies))
 }
 
 export function findCharacter(account: Account, name: string) {
@@ -22,11 +73,32 @@ export function findCharacter(account: Account, name: string) {
 }
 
 function findCharacterTask(account: Account, characterName: string, name: string) {
-    return getCharacterTaskList(account, characterName).find(task => task.name === name)
+    let task = getDailyCharacterTaskList(account, characterName).find(task => task.name === name);
+    if (task !== undefined) {
+        account.lastDailyUpdate = moment().toJSON()
+        return task
+    }
+    task = getDailyCharacterTaskList(account, characterName).find(task => task.name === name)
+    if (task !== undefined) {
+        account.lastWeeklyUpdate = moment().toJSON()
+        return task
+    }
+
+    return task
 }
 
 function findTask(account: Account, name: string) {
-    return getTaskList(account).find(task => task.name === name)
+    let task = getDailyTaskList(account).find(task => task.name === name);
+    if (task !== undefined) {
+        account.lastDailyUpdate = moment().toJSON()
+        return task
+    }
+    task = getWeeklyTaskList(account).find(task => task.name === name)
+    if (task !== undefined) {
+        account.lastWeeklyUpdate = moment().toJSON()
+        return task
+    }
+    return task
 }
 
 export const accountSlice = createSlice({
@@ -71,6 +143,17 @@ export const accountSlice = createSlice({
             }
             return state
         },
+        checkUpdates: (state: Draft<Account>) => {
+            if (moment(state.lastDailyUpdate).isBefore(getLastDailyReset())) {
+                state = resetDailies(state)
+                state.lastDailyUpdate = moment().toJSON()
+            }
+            if (moment(state.lastWeeklyUpdate).isBefore(getLastWeeklyReset())) {
+                state = resetWeeklies(state)
+                state.lastWeeklyUpdate = moment().toJSON()
+            }
+            return state
+        }
     }
 })
 
@@ -80,6 +163,7 @@ export const {
     removeCharacter,
     updateExchangeRate,
     update,
+    checkUpdates,
 } = accountSlice.actions
 
 export default accountSlice.reducer

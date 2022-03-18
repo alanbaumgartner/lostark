@@ -1,5 +1,5 @@
 import * as React from 'react';
-import {useState} from 'react';
+import {useEffect, useRef, useState} from 'react';
 import {CSSObject, styled, Theme, useTheme} from '@mui/material/styles';
 import Box from '@mui/material/Box';
 import MuiDrawer from '@mui/material/Drawer';
@@ -23,7 +23,10 @@ import {Link, Route, Routes} from "react-router-dom";
 import MarisShop from "./pages/MarisShop";
 import {GitHub, ShoppingCart} from "@mui/icons-material";
 import CreateCharacterDialog from "./components/CreateCharacterDialog";
-import {Avatar} from "@mui/material";
+import {checkUpdates} from "./app/accountSlice";
+import {useDispatch} from "react-redux";
+import {getNextDailyReset, getNextWeeklyReset} from "./data/TimeUtility";
+import moment from 'moment';
 
 const drawerWidth = 240;
 
@@ -98,8 +101,13 @@ const Drawer = styled(MuiDrawer, {shouldForwardProp: (prop) => prop !== 'open'})
 );
 
 export default function App() {
+
     const theme = useTheme();
     const [open, setOpen] = React.useState(false);
+
+    const dispatch = useDispatch()
+
+    dispatch(checkUpdates())
 
     const handleDrawerOpen = () => {
         setOpen(true);
@@ -110,11 +118,6 @@ export default function App() {
     };
 
     const [createCharacterOpen, setCreateCharacterOpen] = useState(false);
-
-
-    const handleCreate = () => {
-        setCreateCharacterOpen(false)
-    }
 
     const handleClickOpen = () => {
         setCreateCharacterOpen(true);

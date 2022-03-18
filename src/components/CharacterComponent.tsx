@@ -129,8 +129,9 @@ export default function CharacterComponent(character: Character) {
                         background: theme.palette.primary.main
                     }}
                     avatar={
-                        <Avatar sx={{width: 64, height: 64}} src={loaClassMap.get(character.loaClass)}
-                                aria-label="class"/>
+                        <Tooltip title={character.loaClass}>
+                            <Avatar sx={{width: 64, height: 64}} src={loaClassMap.get(character.loaClass)} aria-label="class"/>
+                        </Tooltip>
                     }
                     action={
                         CharacterMenu(character)
@@ -151,7 +152,7 @@ export default function CharacterComponent(character: Character) {
                     <Stack sx={{width: "100%"}}>
                         {TaskListComponent(character.dailies.filter(task => canDo(task, character)), "Dailies", character)}
                         {TaskListComponent(character.weeklies.filter(task => !task.name.startsWith("Abyss - ") && canDo(task, character)), "Weeklies", character)}
-                        {TaskListComponent(abyss, "Abyss", character)}
+                        {abyss.length > 0 ? TaskListComponent(abyss, "Abyss", character) : <div/>}
                     </Stack>
                 </CardActions>
             </Card>

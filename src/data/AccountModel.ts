@@ -1,11 +1,15 @@
 import {generateDailyAccountData, generateWeeklyAccountData, Task} from "./TaskModel";
 import {Character} from "./CharacterModel";
+import moment from "moment";
 
 export interface Account {
     accountDailies: Task[],
     accountWeeklies: Task[],
     characters: Character[],
-    exchangeRate: number
+    exchangeRate: number,
+    lastDailyUpdate: string,
+    lastWeeklyUpdate: string,
+
 }
 
 export function createAccount(): Account {
@@ -13,6 +17,8 @@ export function createAccount(): Account {
         accountDailies: generateDailyAccountData(),
         accountWeeklies: generateWeeklyAccountData(),
         characters: [],
-        exchangeRate: 1000
+        exchangeRate: 1000,
+        lastDailyUpdate: moment().toJSON(),
+        lastWeeklyUpdate: moment().toJSON()
     }
 }
