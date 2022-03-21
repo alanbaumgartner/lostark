@@ -5,7 +5,7 @@ export function getLastDailyReset() {
 }
 
 export function getLastWeeklyReset() {
-    return moment().utc().startOf('week').add(4, 'day').add(10, 'hour')
+    return moment().utc().day(moment().day() >= 5 ? 5 :-3);
 }
 
 export function getNextDailyReset() {
