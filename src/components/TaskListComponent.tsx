@@ -12,19 +12,11 @@ export default function TaskListComponent(tasks: Task[], name?: string, characte
     const [open, setOpen] = useState(false)
 
     const current = tasks.map(task => {
-        if (task.currentCount !== undefined) {
-            return task.currentCount
-        } else {
-            return task.completed ? 1 : 0
-        }
+        return task.currentCount
     }).reduce((partialSum, a) => partialSum + a, 0);
 
     const total = tasks.map(task => {
-        if (task.requiredCount !== undefined) {
-            return task.requiredCount
-        } else {
-            return 1
-        }
+        return task.requiredCount
     }).reduce((partialSum, a) => partialSum + a, 0);
 
 

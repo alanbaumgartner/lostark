@@ -11,7 +11,7 @@ import Timers from "../components/Timers";
 
 export default function Home() {
 
-    const characters: Character[] = useSelector((state: RootState) => state.persistedReducer.characters)
+    const characters: Character[] = useSelector((state: RootState) => state.persistedReducer.account.characters)
 
     return (
         <Box

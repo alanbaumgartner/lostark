@@ -2,23 +2,17 @@ import * as React from 'react';
 import {Checkbox, ListItem, ListItemText, Rating} from '@mui/material';
 import {update} from "../app/accountSlice";
 import {useDispatch} from "react-redux";
-import {Task} from "../data/TaskModel";
+import {isTaskDone, Task} from "../data/TaskModel";
 import FavoriteIcon from '@mui/icons-material/Favorite';
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 import {Character} from "../data/CharacterModel";
 
-function toggleTask(task: Task) {
-    task.completed = !task.completed
-}
-
 function createTaskUpdate(amount: number) {
     return (t: Task) => {
-        if (t.currentCount !== undefined) {
-            if (t.currentCount > amount) {
-                t.currentCount = Math.max(amount, 0)
-            } else {
-                t.currentCount = Math.min(amount, t.requiredCount ?? t.currentCount)
-            }
+        if (t.currentCount > amount) {
+            t.currentCount = Math.max(amount, 0)
+        } else {
+            t.currentCount = Math.min(amount, t.requiredCount ?? t.currentCount)
         }
     }
 }
@@ -27,7 +21,7 @@ export default function TaskComponent(task: Task, character?: Character) {
 
     const dispatch = useDispatch()
 
-    if (task.currentCount !== undefined && task.requiredCount !== undefined) {
+    if (task.requiredCount > 1) {
         return (
             <ListItem
                 key={task.name}
@@ -65,9 +59,13 @@ export default function TaskComponent(task: Task, character?: Character) {
                 <Checkbox
                     edge="end"
                     onChange={(_) => {
-                        dispatch(update({task: task, character: character?.name, update: toggleTask}))
+                        dispatch(update({
+                            task: task,
+                            character: character?.name,
+                            update: createTaskUpdate(1 - task.currentCount)
+                        }))
                     }}
-                    checked={task.completed}
+                    checked={isTaskDone(task)}
                 />
             }
             disablePadding

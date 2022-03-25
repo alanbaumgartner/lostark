@@ -21,7 +21,7 @@ function calculateGoldCost(exchangeRate: number) {
 function ExchangeComponent() {
 
     const dispatch = useDispatch()
-    const exchangeRate: number = useSelector((state: RootState) => state.persistedReducer.exchangeRate)
+    const exchangeRate: number = useSelector((state: RootState) => state.persistedReducer.account.exchangeRate)
 
     return (
         <Box>
@@ -135,7 +135,7 @@ const rowData = [
 
 export default function MarisShop() {
 
-    const exchangeRate: number = useSelector((state: RootState) => state.persistedReducer.exchangeRate)
+    const exchangeRate: number = useSelector((state: RootState) => state.persistedReducer.account.exchangeRate)
 
     const columns: GridColDef[] = [
         {

@@ -11,10 +11,10 @@ export default function Dailies() {
 
     const theme = useTheme()
 
-    const accountDailies: Task[] = useSelector((state: RootState) => state.persistedReducer.accountDailies)
+    const accountDailies: Task[] = useSelector((state: RootState) => state.persistedReducer.account.accountDailies)
 
     return (
-        <Box sx={{px: 2,  marginTop: 2}}>
+        <Box sx={{px: 2, marginTop: 2}}>
             <Card sx={{width: 'auto', height: '100%'}}>
                 <CardContent sx={{background: theme.palette.primary.main}}>
                     <Typography variant={"h5"} sx={{

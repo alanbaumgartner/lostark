@@ -9,9 +9,8 @@ export interface TaskUpdate {
 
 export interface Task {
     name: string,
-    completed: boolean,
-    currentCount?: number,
-    requiredCount?: number
+    currentCount: number,
+    requiredCount: number,
 }
 
 export interface CharacterTask extends Task {
@@ -22,42 +21,49 @@ export function canDo(task: CharacterTask, character: Character) {
     return task.requiredItemLevel <= character.itemLevel
 }
 
+export function getTaskProgress(task: Task) {
+    return task.currentCount / task.requiredCount
+}
+
 export function isTaskDone(task: Task) {
-    return task.completed || (task.currentCount !== undefined && task.requiredCount !== undefined && task.currentCount >= task.requiredCount)
+    return getTaskProgress(task) === 1
 }
 
-export function createTask(name: string) {
-    return {name: name, completed: false}
+export function createTask(name: string, count: number = 1): Task {
+    return {
+        name: name,
+        currentCount: 0,
+        requiredCount: count
+    }
 }
 
-export function createCountTask(name: string, count: number) {
-    return {name: name, completed: false, currentCount: 0, requiredCount: count}
-}
-
-export function createCharacterTask(name: string, requiredItemLevel: number = 0): CharacterTask {
-    return {name: name, completed: false, requiredItemLevel: requiredItemLevel}
-}
-
-export function createCharacterCountTask(name: string, count: number, requiredItemLevel: number = 0): CharacterTask {
-    return {name: name, completed: false, currentCount: 0, requiredCount: count, requiredItemLevel: requiredItemLevel}
+export function createCharacterTask(name: string, count: number = 1, requiredItemLevel: number = 0): CharacterTask {
+    return {
+        name: name,
+        currentCount: 0,
+        requiredCount: count,
+        requiredItemLevel: requiredItemLevel
+    }
 }
 
 export const generateDailyAccountData = () => {
     return [
         createTask("Adventure Island"),
-        createTask("Calendar Boss"),
+        createTask("Field Boss"),
         createTask("Chaos Gate"),
-        createCountTask("Affinity Song", 6),
-        createCountTask("Affinity Emote", 6),
+        createTask("Grand Prix Race"),
+        createTask("Affinity Song", 6),
+        createTask("Affinity Emote", 6),
     ];
 };
 
 export const generateDailyCharacterData = () => {
     return [
-        createCharacterCountTask("Una's Task Daily", 3),
-        createCharacterCountTask("Chaos Dungeon", 2),
-        createCharacterCountTask("Guardian", 2),
-        createCharacterCountTask("Kalthertz Slaves", 5),
+        createCharacterTask("Una's Task Daily", 3),
+        createCharacterTask("Chaos Dungeon", 2),
+        createCharacterTask("Guardian Raid", 2),
+        createCharacterTask("Kalthertz Slaves", 5),
+        createCharacterTask("Guardian Event"),
         createCharacterTask("Guild Donation"),
         createCharacterTask("Guild Research Support"),
     ];
@@ -66,26 +72,28 @@ export const generateDailyCharacterData = () => {
 export const generateWeeklyAccountData = () => {
     return [
         createTask("Ghostship"),
-        createCountTask("Trial of the Abyss", 2),
+        createTask("Grand Prix Shop"),
+        createTask("Guardian Event Shop"),
+        createTask("Trial of the Abyss", 2),
     ];
 };
 
 export const generateWeeklyCharacterData = () => {
     return [
-        createCharacterCountTask("Una's Task Weekly", 3),
-        createCharacterCountTask("Guardian Weekly", 3),
-        createCharacterTask("Abyss - Demon Beast Canyon", 340),
-        createCharacterTask("Abyss - Necromancer's Origin", 340),
-        createCharacterTask("Abyss - Hall of the Twisted Warlord", 460),
-        createCharacterTask("Abyss - Hildebrandt Palace", 460),
-        createCharacterTask("Abyss - Road of Lament", 840),
-        createCharacterTask("Abyss - Forge of Fallen Pride", 840),
-        createCharacterTask("Abyss - Sea of Indolence", 960),
-        createCharacterTask("Abyss - Tranquil Karkosa", 960),
-        createCharacterTask("Abyss - Alaric's Sanctuary", 960),
-        createCharacterTask("Abyss - Aira's Oculus", 1325),
-        createCharacterTask("Abyss - Oreha Preveza", 1340),
-        createCharacterTask("Abyss Raid - Argos", 1370),
+        createCharacterTask("Una's Task Weekly", 3),
+        createCharacterTask("Guardian Weekly", 3),
+        createCharacterTask("Abyss - Demon Beast Canyon", 1, 340),
+        createCharacterTask("Abyss - Necromancer's Origin", 1, 340),
+        createCharacterTask("Abyss - Hall of the Twisted Warlord", 1, 460),
+        createCharacterTask("Abyss - Hildebrandt Palace", 1, 460),
+        createCharacterTask("Abyss - Road of Lament", 1, 840),
+        createCharacterTask("Abyss - Forge of Fallen Pride", 1, 840),
+        createCharacterTask("Abyss - Sea of Indolence", 1, 960),
+        createCharacterTask("Abyss - Tranquil Karkosa", 1, 960),
+        createCharacterTask("Abyss - Alaric's Sanctuary", 1, 960),
+        createCharacterTask("Abyss - Aira's Oculus", 1, 1325),
+        createCharacterTask("Abyss - Oreha Preveza", 1, 1340),
+        createCharacterTask("Abyss Raid - Argos", 1, 1370),
         createCharacterTask("Sylmael Bloodstone Exchange"),
         createCharacterTask("Pirate Vendor"),
         createCharacterTask("Chaos Dungeon Vendor"),

@@ -22,12 +22,12 @@ export default function Timers() {
                 </CardContent>
                 <CardActions>
                     <Stack sx={{width: "100%"}} direction={"row"}>
-                    <Typography sx={{ marginLeft: 2, width: "50%"}}>
-                        Daily: {moment.duration(getNextDailyReset().diff(moment().utc())).humanize()}
-                    </Typography>
-                    <Typography sx={{width: "50%"}}>
-                        Weekly: {moment.duration(getNextWeeklyReset().diff(moment().utc())).humanize()}
-                    </Typography>
+                        <Typography sx={{marginLeft: 2, width: "50%"}}>
+                            Daily: {moment.duration(getNextDailyReset().diff(moment().utc())).humanize()}
+                        </Typography>
+                        <Typography sx={{width: "50%"}}>
+                            Weekly: {moment.duration(getNextWeeklyReset().diff(moment().utc())).humanize()}
+                        </Typography>
                     </Stack>
                 </CardActions>
             </Card>

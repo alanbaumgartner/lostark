@@ -1,17 +1,29 @@
 import moment from "moment";
 
-export function getLastDailyReset() {
-    return moment().utc().startOf('day').add(10, 'hour')
+export function getNextWeeklyReset() {
+    const thursdayIndex = 4; // for Thursday
+    const todayIndex = moment().isoWeekday();
+
+    if (todayIndex <= thursdayIndex && moment().utc().hour() < 10) {
+        return moment().utc().isoWeekday(thursdayIndex).add(10, 'hour');
+    } else {
+        return moment().utc().add(1, 'weeks').isoWeekday(thursdayIndex).add(10, 'hour');
+    }
 }
 
 export function getLastWeeklyReset() {
-    return moment().utc().day(moment().day() >= 5 ? 5 :-3);
+    return getNextWeeklyReset().subtract(7, 'day')
 }
 
 export function getNextDailyReset() {
-    return getLastDailyReset().add(1, 'day')
+    let today = moment().utc()
+    if (today.hour() < 10) {
+        return today.startOf('day').add(10, 'hour');
+    } else {
+        return today.startOf('day').add(1, 'day').add(10, 'hour');
+    }
 }
 
-export function getNextWeeklyReset() {
-    return getLastWeeklyReset().add(7, 'day')
+export function getLastDailyReset() {
+    return getNextDailyReset().subtract(1, 'day')
 }

@@ -8,17 +8,12 @@ import {getLastDailyReset, getLastWeeklyReset} from "../data/TimeUtility";
 
 function resetDailies(account: Account) {
     account.accountDailies.forEach(task => {
-        if (task.currentCount !== undefined) {
-            task.currentCount = 0
-        }
-        task.completed = false
+        task.currentCount = 0
+
     })
     account.characters.forEach(char => {
         char.dailies.forEach(task => {
-            if (task.currentCount !== undefined) {
-                task.currentCount = 0
-            }
-            task.completed = false
+            task.currentCount = 0
         })
     })
     return account
@@ -26,17 +21,11 @@ function resetDailies(account: Account) {
 
 function resetWeeklies(account: Account) {
     account.accountWeeklies.forEach(task => {
-        if (task.currentCount !== undefined) {
-            task.currentCount = 0
-        }
-        task.completed = false
+        task.currentCount = 0
     })
     account.characters.forEach(char => {
         char.weeklies.forEach(task => {
-            if (task.currentCount !== undefined) {
-                task.currentCount = 0
-            }
-            task.completed = false
+            task.currentCount = 0
         })
     })
     return account

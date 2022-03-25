@@ -1,14 +1,20 @@
-import {configureStore} from '@reduxjs/toolkit';
+import {combineReducers, configureStore} from '@reduxjs/toolkit';
 import {persistReducer, persistStore} from 'redux-persist'
 import storage from 'redux-persist/lib/storage'
 import {accountSlice} from "./accountSlice";
+import autoMergeLevel1 from "redux-persist/es/stateReconciler/autoMergeLevel1";
+
+const rootReducer = combineReducers({
+    account: accountSlice.reducer,
+})
 
 const persistConfig = {
-    key: 'loa_v1',
+    key: 'loa_v2',
     storage,
+    stateReconciler: autoMergeLevel1,
 }
 
-const persistedReducer = persistReducer(persistConfig, accountSlice.reducer)
+const persistedReducer = persistReducer<any, any>(persistConfig, rootReducer)
 
 export const store = configureStore({
     reducer: {
@@ -18,7 +24,6 @@ export const store = configureStore({
         getDefaultMiddleware({
             serializableCheck: false,
         }),
-    preloadedState: undefined
 });
 
 export const persistor = persistStore(store)

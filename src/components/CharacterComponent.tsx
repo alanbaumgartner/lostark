@@ -130,7 +130,8 @@ export default function CharacterComponent(character: Character) {
                     }}
                     avatar={
                         <Tooltip title={character.loaClass}>
-                            <Avatar sx={{width: 64, height: 64}} src={loaClassMap.get(character.loaClass)} aria-label="class"/>
+                            <Avatar sx={{width: 64, height: 64}} src={loaClassMap.get(character.loaClass)}
+                                    aria-label="class"/>
                         </Tooltip>
                     }
                     action={

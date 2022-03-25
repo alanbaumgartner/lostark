@@ -10,7 +10,7 @@ import TaskListComponent from "./TaskListComponent";
 export default function Weeklies() {
 
     const theme = useTheme()
-    const accountWeeklies: Task[] = useSelector((state: RootState) => state.persistedReducer.accountWeeklies)
+    const accountWeeklies: Task[] = useSelector((state: RootState) => state.persistedReducer.account.accountWeeklies)
 
     return (
         <Box sx={{px: 2, marginTop: 2}}>
